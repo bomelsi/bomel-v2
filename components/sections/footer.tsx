@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { RotatingWord } from "@/components/rotating-word";
 import { SocialConnect } from "@/components/social-connect";
 import { FooterWordmark } from "@/components/footer-wordmark";
 import { NAV_LINKS, WHATSAPP_NUMBER, WHATSAPP_URL } from "@/lib/site";
@@ -80,9 +81,9 @@ export function Footer() {
               aria-hidden="true"
               className="hidden h-px flex-1 bg-gradient-to-r from-transparent to-brand/40 sm:block"
             />
-            <p className="font-heading mx-auto text-center text-base font-semibold tracking-wide text-brand md:text-lg">
-              Cuando pienses en ventanas, piensa en{" "}
-              <span className="text-brand-bright">BOMEL</span>.
+            <p className="font-heading mx-auto text-center text-lg font-semibold tracking-wide text-brand md:text-2xl">
+              Cuando pienses en <RotatingWord />, piensa en{" "}
+              <span className="font-extrabold text-brand-bright">BOMEL</span>.
             </p>
             <span
               aria-hidden="true"
