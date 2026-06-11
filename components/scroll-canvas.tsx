@@ -25,7 +25,8 @@ interface ScrollCanvasProps {
 /**
  * Secuencia de imágenes controlada por scroll, estilo Apple.
  * - Pre-carga todos los frames con objetos Image y muestra un indicador de carga.
- * - Dibuja con ctx.drawImage en cover-fit dentro de requestAnimationFrame.
+ * - Dibuja con ctx.drawImage (cover-fit en horizontal, contain-fit con
+ *   bordes desvanecidos en vertical) dentro de requestAnimationFrame.
  * - Multiplica la resolución interna por devicePixelRatio para nitidez HiDPI/Retina.
  */
 export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
@@ -69,18 +70,41 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       }
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Cover-fit: escala para llenar el lienzo sin deformar la imagen.
-      const scale = Math.max(cssWidth / img.width, cssHeight / img.height);
+      // Contenedor vertical (móvil): contain-fit para que la casa quepa
+      // completa. Contenedor horizontal (desktop): cover-fit como siempre.
+      const fitContain = cssHeight > cssWidth;
+      const scale = fitContain
+        ? Math.min(cssWidth / img.width, cssHeight / img.height)
+        : Math.max(cssWidth / img.width, cssHeight / img.height);
       const drawWidth = img.width * scale;
       const drawHeight = img.height * scale;
+      const dx = (cssWidth - drawWidth) / 2;
+      const dy = (cssHeight - drawHeight) / 2;
       ctx.clearRect(0, 0, cssWidth, cssHeight);
-      ctx.drawImage(
-        img,
-        (cssWidth - drawWidth) / 2,
-        (cssHeight - drawHeight) / 2,
-        drawWidth,
-        drawHeight
-      );
+      ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+
+      // En contain-fit, desvanece los bordes superior e inferior de la
+      // imagen borrando alfa, para que se fundan con el fondo de la tarjeta.
+      if (fitContain) {
+        const fade = Math.min(drawHeight * 0.18, 90);
+        ctx.globalCompositeOperation = "destination-out";
+        const top = ctx.createLinearGradient(0, dy, 0, dy + fade);
+        top.addColorStop(0, "rgba(0,0,0,1)");
+        top.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = top;
+        ctx.fillRect(dx, dy, drawWidth, fade);
+        const bottom = ctx.createLinearGradient(
+          0,
+          dy + drawHeight - fade,
+          0,
+          dy + drawHeight
+        );
+        bottom.addColorStop(0, "rgba(0,0,0,0)");
+        bottom.addColorStop(1, "rgba(0,0,0,1)");
+        ctx.fillStyle = bottom;
+        ctx.fillRect(dx, dy + drawHeight - fade, drawWidth, fade);
+        ctx.globalCompositeOperation = "source-over";
+      }
     }, [nearestLoaded]);
 
     const scheduleRender = useCallback(() => {
