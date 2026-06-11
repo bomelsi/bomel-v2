@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/*
+  Sistema de diseño BOMEL — adaptado al logo de marca (teal #5BA8A0).
+  Base: paleta "Trust teal" (UI/UX Pro Max · Real Estate/Property)
+  sobre fondo oscuro premium para estética cinematográfica.
+*/
+:root {
+  --background: #060c0b;
+  --foreground: #eef7f5;
+  --brand: #5ba8a0;
+  --brand-strong: #0f766e;
+  --brand-bright: #2dd4bf;
+  --muted: #8fa8a4;
+  --card: #0b1514;
+  --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-bright: var(--brand-bright);
+  --color-muted-foreground: var(--muted);
+  --color-card: var(--card);
+  --font-sans: var(--font-open-sans), system-ui, sans-serif;
+  --font-heading: var(--font-poppins), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* El cursor personalizado reemplaza al nativo (solo puntero fino) */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--brand-strong);
+  color: #ffffff;
+}
+
+/* Utilidades compartidas */
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+/* Panel glassmorphism — blur 10-20px, blanco 10-30%, borde 1px (checklist del skill) */
+.glass-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.12);
+}
+
+.glass-panel-hover {
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.glass-panel-hover:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.7),
+    0 0 40px -10px color-mix(in srgb, var(--brand-bright) 25%, transparent),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+.text-glow-brand {
+  text-shadow: 0 0 40px color-mix(in srgb, var(--brand-bright) 45%, transparent);
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--brand-bright);
+}
+
+.section-kicker::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: var(--brand);
+}
