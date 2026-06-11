@@ -29,7 +29,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Sin scroll-behavior: smooth — anima los ajustes internos de
+     ScrollTrigger y provoca tirones; el desplazamiento suave de los
+     anclas lo hace <SmoothAnchors /> por JS solo al hacer clic. */
   /* clip (no hidden): bloquea el paneo lateral en móvil sin crear un
      scroll container que rompería los elementos sticky */
   overflow-x: clip;

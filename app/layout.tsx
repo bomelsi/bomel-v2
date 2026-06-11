@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Open_Sans } from "next/font/google";
 import { CustomCursor } from "@/components/custom-cursor";
+import { SmoothAnchors } from "@/components/smooth-anchors";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -39,6 +40,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <CustomCursor />
+        <SmoothAnchors />
         {children}
       </body>
     </html>
