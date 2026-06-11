@@ -30,6 +30,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* clip (no hidden): bloquea el paneo lateral en móvil sin crear un
+     scroll container que rompería los elementos sticky */
+  overflow-x: clip;
 }
 
 /* El cursor personalizado reemplaza al nativo (solo puntero fino) */
@@ -42,7 +45,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {

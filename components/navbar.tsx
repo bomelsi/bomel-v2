@@ -21,9 +21,9 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-[100]">
       <nav
         className={cn(
-          "mx-auto mt-4 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-2.5 md:px-6 transition-all duration-500",
+          "mx-4 mt-4 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-2.5 md:px-6 lg:mx-auto transition-all duration-500",
           scrolled
-            ? "glass-panel mx-4 lg:mx-auto"
+            ? "glass-panel"
             : "bg-transparent border border-transparent"
         )}
         aria-label="Navegación principal"

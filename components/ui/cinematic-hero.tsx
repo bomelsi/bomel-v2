@@ -271,7 +271,7 @@ export function CinematicHero({
         .set(".cta-wrapper", { autoAlpha: 1 })
         .to(".main-card", {
           width: isMobile ? "92vw" : "85vw",
-          height: isMobile ? "92vh" : "85vh",
+          height: isMobile ? "85svh" : "85vh",
           borderRadius: isMobile ? "32px" : "40px",
           ease: "expo.inOut",
           duration: 1.8,
@@ -294,7 +294,7 @@ export function CinematicHero({
 
       {/* Escenario sticky: permanece fijo mientras el contenedor de 600vh hace scroll */}
       <div
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-background text-foreground font-sans"
+        className="sticky top-0 h-dvh md:h-screen w-full overflow-hidden flex items-center justify-center bg-background text-foreground font-sans"
         style={{ perspective: "1500px" }}
       >
         <div className="film-grain" aria-hidden="true" />
@@ -349,7 +349,7 @@ export function CinematicHero({
         >
           <div
             ref={mainCardRef}
-            className="main-card premium-depth-card relative overflow-hidden gsap-reveal pointer-events-auto w-[92vw] md:w-[85vw] h-[92vh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
+            className="main-card premium-depth-card relative overflow-hidden gsap-reveal pointer-events-auto w-[92vw] md:w-[85vw] h-[85svh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
           >
             <div className="card-sheen" aria-hidden="true" />
 
@@ -384,7 +384,7 @@ export function CinematicHero({
             </div>
 
             {/* Insignias de vidrio flotantes */}
-            <div className="floating-badge absolute flex top-24 left-6 md:top-28 md:left-12 floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+            <div className="floating-badge absolute flex top-48 left-6 md:top-28 md:left-12 floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
               <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-teal-500/20 to-teal-900/10 flex items-center justify-center border border-teal-400/30 shadow-inner">
                 <svg
                   className="h-4 w-4 lg:h-5 lg:w-5 text-teal-300 drop-shadow-lg"
@@ -409,7 +409,7 @@ export function CinematicHero({
               </div>
             </div>
 
-            <div className="floating-badge absolute flex bottom-24 right-6 md:bottom-32 md:right-12 floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
+            <div className="floating-badge absolute flex bottom-44 right-6 md:bottom-32 md:right-12 floating-ui-badge rounded-xl lg:rounded-2xl p-3 lg:p-4 items-center gap-3 lg:gap-4 z-30">
               <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gradient-to-b from-emerald-500/20 to-emerald-900/10 flex items-center justify-center border border-emerald-400/30 shadow-inner">
                 <svg
                   className="h-4 w-4 lg:h-5 lg:w-5 text-emerald-300 drop-shadow-lg"
