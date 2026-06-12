@@ -3,6 +3,7 @@ import { Poppins, Open_Sans } from "next/font/google";
 import { CustomCursor } from "@/components/custom-cursor";
 import { SmoothAnchors } from "@/components/smooth-anchors";
 import { StructuredData } from "@/components/structured-data";
+import { MobileStickyBar } from "@/components/mobile-sticky-bar";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -76,6 +77,7 @@ export default function RootLayout({
         <CustomCursor />
         <SmoothAnchors />
         {children}
+        <MobileStickyBar />
       </body>
     </html>
   );

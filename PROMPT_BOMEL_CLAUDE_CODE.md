@@ -26,7 +26,26 @@ En la raíz del proyecto encontrarás el PDF `BOMEL_Soluciones_Arquitectonicas.p
 
 ---
 
-**Imágenes para páginas de servicio y proyectos:** Donde no haya fotos reales disponibles (del PDF o del repositorio), usa imágenes de **Unsplash** con el componente `next/image` y URL directa de Unsplash (agrega `images.unsplash.com` a `next.config.js` en `remotePatterns`). Elige fotos profesionales y realistas acordes al servicio: fachadas de edificios modernos, instalación de ventanas de aluminio, interiores con divisiones de vidrio, etc. Cada imagen debe llevar un comentario `// TODO: reemplazar con foto real de BOMEL` y un `alt` descriptivo. El objetivo es que las páginas no se vean vacías desde el primer día mientras se recopilan fotos reales.
+**Imágenes para páginas de servicio y proyectos:** Donde no haya fotos reales disponibles (del PDF o del repositorio), usa imágenes de **Unsplash** con el componente `next/image` y URL directa de Unsplash (agrega `images.unsplash.com` a `next.config.js` en `remotePatterns`). 
+
+**CRÍTICO — cada página debe tener fotos temáticamente correctas y únicas, nunca repetir la misma foto en páginas distintas.** Usa búsquedas específicas por servicio:
+
+| Página | Keywords para buscar en Unsplash |
+|---|---|
+| `/servicios/obra-civil-y-obra-gris` | `concrete construction foundation`, `building structure steel` |
+| `/servicios/diseno-arquitectonico` | `architectural blueprints design`, `architect drawing plans` |
+| `/servicios/instalaciones-electricas-hidraulicas` | `electrical installation conduit`, `plumbing pipes construction` |
+| `/servicios/acabados-finos-y-revestimientos` | `interior wall finishing`, `ACM cladding facade panel` |
+| `/servicios/ventaneria-y-puertas` | `aluminum window installation`, `glass door modern building` |
+| `/servicios/fachadas-acm` | `ACM facade building modern`, `aluminum composite panel exterior` |
+| `/proyectos/hospital-nacional-rosales` | `hospital building exterior`, `medical facility construction` |
+| `/proyectos/centro-medico-san-alejo` | `medical center facade`, `clinic building modern` |
+| `/proyectos/recintos-deportivos` | `sports facility exterior`, `stadium construction` |
+| `/proyectos/plaza-universitaria` | `university building campus`, `educational facility facade` |
+| `/proyectos/fgr-santa-elena` | `corporate office building glass`, `government building facade` |
+| `/proyectos/residencia-caceres` | `modern house exterior`, `residential architecture luxury` |
+
+Busca URLs reales de Unsplash para cada una — no uses la misma foto en dos páginas distintas. Cada imagen debe llevar `alt` descriptivo y comentario `// TODO: reemplazar con foto real de BOMEL`.
 
 
 
@@ -86,6 +105,16 @@ Una por proyecto destacado existente (Centro Médico San Alejo, Hospital Naciona
 3. **Sección Equipo:** omitir completamente por ahora. No crear esta sección.
 4. **Sección FAQ general en la home** (6 preguntas): "¿Atienden proyectos pequeños como cambiar una puerta o ventana?", "¿Trabajan solo la ventanería si ya tengo constructor?", "¿Cuánto tarda una cotización?", "¿Dan garantía por escrito?", "¿Trabajan con empresas y licitaciones?", "¿En qué zonas de El Salvador trabajan?". Acordeón con el estilo del sitio + schema FAQPage. Redacta respuestas persuasivas tú mismo.
 5. **Footer completo (NAP):** ubicación pública: "San Salvador, El Salvador — Atendemos todo el país" (NO mostrar la dirección exacta por ahora; dejar comentario en código para agregarla cuando el taller esté listo), teléfono con enlace `tel:+50370401212`, email `mailto:luispanameno@bomelsi.com`, horario de atención.
+
+---
+
+## CORRECCIÓN PREVIA A FASE 4 — Fotos únicas por página
+
+Antes de ejecutar Fase 4, corrige un problema de las Fases 2 y 3 ya aplicadas: las páginas de servicio y proyecto están usando fotos repetidas o fotos de proyectos reales en contextos incorrectos. 
+
+Revisa `lib/data/servicios.ts` y `lib/data/proyectos.ts` y reemplaza TODAS las URLs de imagen por fotos de Unsplash temáticamente correctas y únicas — ninguna foto debe repetirse entre páginas distintas. Usa la tabla de keywords de la sección "Imágenes para páginas de servicio" arriba para buscar URLs reales de Unsplash específicas para cada página.
+
+Haz commit de esta corrección con mensaje `fix: fotos únicas y temáticas por página de servicio y proyecto` antes de continuar con Fase 4.
 
 ---
 

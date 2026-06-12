@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 import { ScrollCanvas, type ScrollCanvasHandle } from "@/components/scroll-canvas";
+import { WHATSAPP_URL } from "@/lib/site";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -337,9 +339,25 @@ export function CinematicHero({
           <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-brand-bright text-glow-brand mb-8">
             {ctaHeading2}
           </p>
-          <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed mb-10">
             {ctaDescription}
           </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-brand-bright to-brand-strong px-7 py-3.5 text-sm font-bold text-[#04211d] shadow-[0_8px_24px_-8px_rgba(45,212,191,0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(45,212,191,0.7)]"
+            >
+              Recibe tu cotización en 24h →
+            </a>
+            <Link
+              href="/contacto"
+              className="inline-flex items-center gap-2 rounded-full border border-brand/40 bg-brand-strong/10 px-7 py-3.5 text-sm font-bold text-brand-bright transition-all hover:-translate-y-0.5 hover:bg-brand-strong/20 hover:border-brand/60"
+            >
+              Agenda una visita técnica
+            </Link>
+          </div>
         </div>
 
         {/* CAPA FRONTAL: Tarjeta física premium con el canvas de la obra */}

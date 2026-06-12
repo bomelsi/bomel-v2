@@ -16,8 +16,64 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 pt-20">
         <SocialConnect />
 
-        {/* ── Columnas de navegación ── */}
-        <div className="mt-16 grid gap-10 border-t border-white/5 pt-14 sm:grid-cols-2 lg:grid-cols-4">
+        {/* ── Logo + Slogan rotativo ── */}
+        <div className="relative mt-16 flex flex-col items-center gap-10 border-t border-white/5 pt-14">
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-0 -z-10 h-[340px] w-[640px] max-w-full -translate-x-1/2 rounded-full bg-brand/[0.07] blur-[100px]"
+          />
+
+          <a
+            href="#"
+            className="group flex flex-col items-center gap-5"
+            aria-label="BOMEL — volver arriba"
+          >
+            <span className="relative inline-flex">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand-bright/0 blur-2xl transition-colors duration-700 group-hover:bg-brand-bright/20"
+              />
+              <Image
+                src="/logo.png"
+                alt=""
+                width={160}
+                height={160}
+                className="h-28 w-28 object-contain opacity-45 transition-all duration-700 group-hover:opacity-100 group-hover:drop-shadow-[0_0_32px_rgba(45,212,191,0.45)] md:h-36 md:w-36"
+              />
+            </span>
+            <span className="block text-center">
+              <span className="font-heading block text-4xl font-black leading-none tracking-tight text-foreground/40 transition-all duration-700 group-hover:text-foreground group-hover:[text-shadow:0_0_32px_rgba(45,212,191,0.55)] md:text-5xl">
+                BOMEL
+              </span>
+              <span className="mt-3 block pl-[0.45em] text-[11px] font-semibold uppercase tracking-[0.45em] text-muted-foreground/60 transition-colors duration-700 group-hover:text-brand-bright md:text-xs">
+                Servicios Integrales
+              </span>
+            </span>
+          </a>
+
+          <div className="flex w-full max-w-3xl items-center gap-5">
+            <span
+              aria-hidden="true"
+              className="hidden h-px flex-1 bg-gradient-to-r from-transparent to-brand/40 sm:block"
+            />
+            <p className="font-heading mx-auto text-center text-lg font-semibold tracking-wide text-brand md:text-2xl">
+              Cuando pienses en <RotatingWord />, piensa en{" "}
+              <span className="font-extrabold text-brand-bright">BOMEL</span>.
+            </p>
+            <span
+              aria-hidden="true"
+              className="hidden h-px flex-1 bg-gradient-to-l from-transparent to-brand/40 sm:block"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Wordmark voxel full-bleed ── */}
+      <FooterWordmark />
+
+      {/* ── Columnas de navegación (debajo de las letras grandes) ── */}
+      <div className="mx-auto max-w-6xl px-6 pb-16 pt-14">
+        <div className="grid gap-10 border-t border-white/5 pt-14 sm:grid-cols-2 lg:grid-cols-4">
           {/* Columna 1 — Marca + NAP */}
           <div className="lg:col-span-1">
             <Link href="/" className="mb-5 flex items-center gap-3 group w-fit">
@@ -142,62 +198,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-
-        {/* ── Slogan rotativo ── */}
-        <div className="relative mt-16 flex flex-col items-center gap-10 border-t border-white/5 pt-14">
-          <div
-            aria-hidden="true"
-            className="absolute left-1/2 top-0 -z-10 h-[340px] w-[640px] max-w-full -translate-x-1/2 rounded-full bg-brand/[0.07] blur-[100px]"
-          />
-
-          {/* Logo BOMEL con glow */}
-          <a
-            href="#"
-            className="group flex flex-col items-center gap-5"
-            aria-label="BOMEL — volver arriba"
-          >
-            <span className="relative inline-flex">
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand-bright/0 blur-2xl transition-colors duration-700 group-hover:bg-brand-bright/20"
-              />
-              <Image
-                src="/logo.png"
-                alt=""
-                width={160}
-                height={160}
-                className="h-28 w-28 object-contain opacity-45 transition-all duration-700 group-hover:opacity-100 group-hover:drop-shadow-[0_0_32px_rgba(45,212,191,0.45)] md:h-36 md:w-36"
-              />
-            </span>
-            <span className="block text-center">
-              <span className="font-heading block text-4xl font-black leading-none tracking-tight text-foreground/40 transition-all duration-700 group-hover:text-foreground group-hover:[text-shadow:0_0_32px_rgba(45,212,191,0.55)] md:text-5xl">
-                BOMEL
-              </span>
-              <span className="mt-3 block pl-[0.45em] text-[11px] font-semibold uppercase tracking-[0.45em] text-muted-foreground/60 transition-colors duration-700 group-hover:text-brand-bright md:text-xs">
-                Servicios Integrales
-              </span>
-            </span>
-          </a>
-
-          <div className="flex w-full max-w-3xl items-center gap-5">
-            <span
-              aria-hidden="true"
-              className="hidden h-px flex-1 bg-gradient-to-r from-transparent to-brand/40 sm:block"
-            />
-            <p className="font-heading mx-auto text-center text-lg font-semibold tracking-wide text-brand md:text-2xl">
-              Cuando pienses en <RotatingWord />, piensa en{" "}
-              <span className="font-extrabold text-brand-bright">BOMEL</span>.
-            </p>
-            <span
-              aria-hidden="true"
-              className="hidden h-px flex-1 bg-gradient-to-l from-transparent to-brand/40 sm:block"
-            />
-          </div>
-        </div>
       </div>
-
-      {/* Wordmark voxel full-bleed */}
-      <FooterWordmark />
 
       {/* Copyright */}
       <div className="border-t border-white/5 px-6 py-5">

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { WHATSAPP_URL } from "@/lib/site";
 
@@ -85,9 +86,21 @@ export function MagneticCta() {
           Cuéntanos qué quieres construir y recibe una respuesta directa, sin
           formularios eternos ni promesas al aire.
         </p>
-        <MagneticButton href={WHATSAPP_URL}>
-          Cotiza por WhatsApp
-        </MagneticButton>
+        <div className="flex flex-col items-center gap-5">
+          <MagneticButton href={WHATSAPP_URL}>
+            Cotiza por WhatsApp
+          </MagneticButton>
+          <Link
+            href="/contacto"
+            className="rounded-full border border-brand/30 bg-brand-strong/10 px-7 py-3 text-sm font-bold text-brand-bright transition-all hover:-translate-y-0.5 hover:bg-brand-strong/20 hover:border-brand/50"
+          >
+            Agenda una visita técnica →
+          </Link>
+          <p className="text-xs text-muted-foreground/70 text-center max-w-xs leading-relaxed">
+            Fecha de entrega por contrato.{" "}
+            <span className="text-foreground/50">Lo que BOMEL firma, BOMEL cumple.</span>
+          </p>
+        </div>
       </motion.div>
     </section>
   );
