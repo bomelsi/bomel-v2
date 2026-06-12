@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 
 interface Proyecto {
@@ -7,6 +8,7 @@ interface Proyecto {
   categoria: string;
   descripcion: string;
   imagen: string;
+  slug: string;
 }
 
 const PROYECTOS: Proyecto[] = [
@@ -16,6 +18,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Estructura metálica, losas densas de segundo y tercer nivel, y una fachada de muro cortina con ACM que le da identidad al edificio.",
     imagen: "/proyecto-centro-medico-san-alejo.jpg",
+    slug: "centro-medico-san-alejo",
   },
   {
     nombre: "Hospital Nacional Rosales",
@@ -23,6 +26,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Reconstrucción del edificio de especialidades: paredes, pisos, divisiones, red eléctrica, puertas y ventanas. Infraestructura crítica, cero margen de error.",
     imagen: "/proyecto-hospital-rosales.jpg",
+    slug: "hospital-nacional-rosales",
   },
   {
     nombre: "Recintos Deportivos El Polvorín y Ciudad Merliot",
@@ -30,6 +34,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Puertas, ventanas y cortasoles de aluminio y vidrio, más drenajes y cajas de registro, para dos recintos de alto tráfico.",
     imagen: "/proyecto-recintos-deportivos.jpg",
+    slug: "recintos-deportivos",
   },
   {
     nombre: "Plaza Universitaria",
@@ -37,6 +42,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Estructura y acabados ejecutados para Constructora El Salvador, con la precisión que exige una obra de uso intensivo.",
     imagen: "/proyecto-plaza-universitaria.jpg",
+    slug: "plaza-universitaria",
   },
   {
     nombre: "FGR Edificio Santa Elena",
@@ -44,6 +50,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Muro cortina con vidrio insulado y cortasol de aluminio para Solaire: una fachada que trabaja tan duro como quienes la habitan.",
     imagen: "/proyecto-fgr-santa-elena.jpg",
+    slug: "fgr-santa-elena",
   },
   {
     nombre: "Residencia Cáceres",
@@ -51,6 +58,7 @@ const PROYECTOS: Proyecto[] = [
     descripcion:
       "Diseño y ejecución integral en Suchitoto: obra gris, instalaciones eléctricas, techos e hidráulica de una residencia familiar completa.",
     imagen: "/proyecto-residencia-caceres.jpg",
+    slug: "residencia-caceres",
   },
 ];
 
@@ -73,7 +81,10 @@ export function ProyectosDestacados() {
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {PROYECTOS.map((proyecto, i) => (
           <Reveal key={proyecto.nombre} delay={(i % 3) * 0.1}>
-            <article className="glass-panel glass-panel-hover group h-full overflow-hidden rounded-3xl">
+            <Link
+              href={`/proyectos/${proyecto.slug}`}
+              className="glass-panel glass-panel-hover group block h-full overflow-hidden rounded-3xl"
+            >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={proyecto.imagen}
@@ -94,11 +105,14 @@ export function ProyectosDestacados() {
                 <h3 className="font-heading text-lg font-bold mb-2">
                   {proyecto.nombre}
                 </h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">
+                <p className="text-sm leading-relaxed text-muted-foreground mb-3">
                   {proyecto.descripcion}
                 </p>
+                <p className="text-xs font-bold text-brand-bright opacity-0 transition-opacity group-hover:opacity-100">
+                  Ver proyecto →
+                </p>
               </div>
-            </article>
+            </Link>
           </Reveal>
         ))}
       </div>
