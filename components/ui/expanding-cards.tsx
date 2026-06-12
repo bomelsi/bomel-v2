@@ -97,9 +97,9 @@ export const ExpandingCards = React.forwardRef<
           <div className="absolute inset-0 bg-gradient-to-t from-[#04211d]/90 via-black/40 to-transparent" />
 
           <article className="absolute inset-0 flex flex-col justify-end gap-2 p-4">
-            <h3 className="hidden origin-left rotate-90 text-sm font-light uppercase tracking-wider text-white/80 opacity-100 transition-all duration-300 ease-out md:block group-data-[active=true]:opacity-0">
+            <p aria-hidden="true" className="hidden origin-left rotate-90 text-sm font-light uppercase tracking-wider text-white/80 opacity-100 transition-all duration-300 ease-out md:block group-data-[active=true]:opacity-0">
               {item.title}
-            </h3>
+            </p>
 
             <div className="text-brand-bright opacity-0 transition-all duration-300 delay-75 ease-out group-data-[active=true]:opacity-100">
               {item.icon}

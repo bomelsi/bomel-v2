@@ -19,10 +19,9 @@ const STATS: Stat[] = [
 
 function Contador({ valor, prefijo = "", sufijo = "" }: Omit<Stat, "etiqueta">) {
   const ref = useRef<HTMLSpanElement>(null);
-  // amount 0.9: el número debe estar casi por completo en pantalla para
-  // arrancar — así el conteo siempre se ve, nunca llega ya terminado.
   const inView = useInView(ref, { once: true, amount: 0.9 });
-  const [display, setDisplay] = useState(0);
+  // null = no animado aún; SSR/noscript muestra valor real via ?? valor
+  const [display, setDisplay] = useState<number | null>(null);
 
   useEffect(() => {
     if (!inView) return;
@@ -35,9 +34,10 @@ function Contador({ valor, prefijo = "", sufijo = "" }: Omit<Stat, "etiqueta">) 
   }, [inView, valor]);
 
   return (
-    <span ref={ref} className="tabular-nums">
+    // suppressHydrationWarning: SSR renderiza `valor`; cliente empieza en null
+    <span ref={ref} className="tabular-nums" suppressHydrationWarning>
       {prefijo}
-      {display}
+      {display ?? valor}
       {sufijo}
     </span>
   );

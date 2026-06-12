@@ -56,13 +56,13 @@ const PROYECTOS: Proyecto[] = [
 
 export function ProyectosDestacados() {
   return (
-    <div className="mt-24">
+    <section id="proyectos" className="mt-24 scroll-mt-28">
       <Reveal className="text-center">
         <p className="section-kicker justify-center mb-5">Proyectos Destacados</p>
-        <h3 className="font-heading mx-auto max-w-3xl text-2xl md:text-4xl font-extrabold tracking-tight leading-[1.15] mb-6">
+        <h2 className="font-heading mx-auto max-w-3xl text-2xl md:text-4xl font-extrabold tracking-tight leading-[1.15] mb-6">
           Obras que hablan por nosotros,{" "}
           <span className="text-brand-bright">antes que cualquier promesa.</span>
-        </h3>
+        </h2>
         <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">
           Hospitales, recintos deportivos, edificios corporativos y residencias:
           cada proyecto entregado es un argumento construido en concreto, acero
@@ -91,9 +91,9 @@ export function ProyectosDestacados() {
                 </span>
               </div>
               <div className="p-6 text-center">
-                <h4 className="font-heading text-lg font-bold mb-2">
+                <h3 className="font-heading text-lg font-bold mb-2">
                   {proyecto.nombre}
-                </h4>
+                </h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {proyecto.descripcion}
                 </p>
@@ -102,6 +102,6 @@ export function ProyectosDestacados() {
           </Reveal>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

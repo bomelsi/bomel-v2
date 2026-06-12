@@ -3,6 +3,7 @@
 export const SITE_URL = "https://www.bomelsi.com";
 export const SITE_NAME = "Servicios Integrales BOMEL S.A. de C.V.";
 
+export const EMAIL = "luispanameno@bomelsi.com";
 export const WHATSAPP_NUMBER = "+503 7040-1212";
 export const PHONE_E164 = "+50370401212";
 export const WHATSAPP_URL =

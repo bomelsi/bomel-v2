@@ -334,9 +334,9 @@ export function CinematicHero({
           <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-silver-matte">
             {ctaHeading1}
           </h2>
-          <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-brand-bright text-glow-brand mb-8">
+          <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-brand-bright text-glow-brand mb-8">
             {ctaHeading2}
-          </h2>
+          </p>
           <p className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto font-light leading-relaxed">
             {ctaDescription}
           </p>

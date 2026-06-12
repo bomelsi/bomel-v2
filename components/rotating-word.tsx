@@ -33,7 +33,7 @@ export function RotatingWord({ intervalMs = 2200 }: { intervalMs?: number }) {
 
   return (
     <>
-      <span className="sr-only">ventanas</span>
+      <span className="sr-only">nuestros servicios</span>
       <span
         aria-hidden="true"
         className="relative inline-grid overflow-hidden align-bottom"
