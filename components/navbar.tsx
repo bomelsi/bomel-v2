@@ -125,6 +125,15 @@ export function Navbar() {
               Proyectos
             </Link>
           </li>
+
+          <li>
+            <Link
+              href="/blog"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-bright"
+            >
+              Blog
+            </Link>
+          </li>
         </ul>
 
         <div className="flex items-center gap-2">
@@ -236,6 +245,16 @@ export function Navbar() {
                   className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
                 >
                   Proyectos
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/blog"
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
+                >
+                  Blog
                 </Link>
               </li>
 

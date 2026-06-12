@@ -113,3 +113,57 @@ body {
   height: 1px;
   background: var(--brand);
 }
+
+/* Blog — Portable Text typography */
+.prose-bomel {
+  color: var(--foreground);
+  line-height: 1.8;
+}
+.prose-bomel h2 {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+.prose-bomel h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+.prose-bomel p {
+  margin-bottom: 1.25rem;
+  color: color-mix(in srgb, var(--foreground) 80%, transparent);
+}
+.prose-bomel strong {
+  color: var(--foreground);
+  font-weight: 700;
+}
+.prose-bomel a {
+  color: var(--brand-bright);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--brand-bright) 40%, transparent);
+  transition: color 0.2s;
+}
+.prose-bomel a:hover {
+  color: var(--brand);
+}
+.prose-bomel ul,
+.prose-bomel ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.prose-bomel ul { list-style-type: disc; }
+.prose-bomel ol { list-style-type: decimal; }
+.prose-bomel li { margin-bottom: 0.35rem; color: color-mix(in srgb, var(--foreground) 80%, transparent); }
+.prose-bomel blockquote {
+  border-left: 3px solid var(--brand-bright);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--brand);
+  font-style: italic;
+}

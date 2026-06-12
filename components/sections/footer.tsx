@@ -184,6 +184,14 @@ export function Footer() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-sm text-muted-foreground transition-colors hover:text-brand-bright"
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
 
             <div className="mt-8">
