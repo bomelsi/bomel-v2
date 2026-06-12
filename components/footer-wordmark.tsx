@@ -153,11 +153,11 @@ export function FooterWordmark() {
     );
     io.observe(wrap);
 
-    // --- Mouse: dirección/profundidad de extrusión + hover por letra ---
-    const onMove = (e: MouseEvent) => {
+    // --- Lógica compartida para mouse y touch ---
+    const updatePointer = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
-      mouseX = e.clientX - rect.left;
-      mouseY = e.clientY - rect.top;
+      mouseX = clientX - rect.left;
+      mouseY = clientY - rect.top;
       lastMove = performance.now();
       hovered = -1;
       if (
@@ -180,7 +180,21 @@ export function FooterWordmark() {
         }
       }
     };
+
+    const onMove = (e: MouseEvent) => updatePointer(e.clientX, e.clientY);
     window.addEventListener("mousemove", onMove, { passive: true });
+
+    // Touch: el dedo sigue al puntero igual que el cursor (passive para no bloquear scroll)
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches[0]) updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+    };
+    const onTouchEnd = () => { mouseX = -1; hovered = -1; };
+    canvas.addEventListener("touchmove", onTouchMove, { passive: true });
+    canvas.addEventListener("touchstart", onTouchStart, { passive: true });
+    canvas.addEventListener("touchend", onTouchEnd, { passive: true });
 
     // --- Loop de render ---
     let raf = 0;
@@ -284,6 +298,9 @@ export function FooterWordmark() {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("mousemove", onMove);
+      canvas.removeEventListener("touchmove", onTouchMove);
+      canvas.removeEventListener("touchstart", onTouchStart);
+      canvas.removeEventListener("touchend", onTouchEnd);
       ro.disconnect();
       io.disconnect();
     };

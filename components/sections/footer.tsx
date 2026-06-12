@@ -31,21 +31,21 @@ export function Footer() {
             <span className="relative inline-flex">
               <span
                 aria-hidden="true"
-                className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand-bright/0 blur-2xl transition-colors duration-700 group-hover:bg-brand-bright/20"
+                className="absolute inset-0 -z-10 scale-125 rounded-full bg-brand-bright/0 blur-2xl transition-colors duration-700 group-hover:bg-brand-bright/20 group-active:bg-brand-bright/20"
               />
               <Image
                 src="/logo.png"
                 alt=""
                 width={160}
                 height={160}
-                className="h-28 w-28 object-contain opacity-45 transition-all duration-700 group-hover:opacity-100 group-hover:drop-shadow-[0_0_32px_rgba(45,212,191,0.45)] md:h-36 md:w-36"
+                className="h-28 w-28 object-contain opacity-45 transition-all duration-700 group-hover:opacity-100 group-hover:drop-shadow-[0_0_32px_rgba(45,212,191,0.45)] group-active:opacity-100 group-active:drop-shadow-[0_0_32px_rgba(45,212,191,0.45)] md:h-36 md:w-36"
               />
             </span>
             <span className="block text-center">
-              <span className="font-heading block text-4xl font-black leading-none tracking-tight text-foreground/40 transition-all duration-700 group-hover:text-foreground group-hover:[text-shadow:0_0_32px_rgba(45,212,191,0.55)] md:text-5xl">
+              <span className="font-heading block text-4xl font-black leading-none tracking-tight text-foreground/40 transition-all duration-700 group-hover:text-foreground group-hover:[text-shadow:0_0_32px_rgba(45,212,191,0.55)] group-active:text-foreground group-active:[text-shadow:0_0_32px_rgba(45,212,191,0.55)] md:text-5xl">
                 BOMEL
               </span>
-              <span className="mt-3 block pl-[0.45em] text-[11px] font-semibold uppercase tracking-[0.45em] text-muted-foreground/60 transition-colors duration-700 group-hover:text-brand-bright md:text-xs">
+              <span className="mt-3 block pl-[0.45em] text-[11px] font-semibold uppercase tracking-[0.45em] text-muted-foreground/60 transition-colors duration-700 group-hover:text-brand-bright group-active:text-brand-bright md:text-xs">
                 Servicios Integrales
               </span>
             </span>

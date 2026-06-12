@@ -82,7 +82,8 @@ body {
     box-shadow 0.5s ease;
 }
 
-.glass-panel-hover:hover {
+.glass-panel-hover:hover,
+.glass-panel-hover:active {
   transform: translateY(-6px);
   border-color: color-mix(in srgb, var(--brand) 45%, transparent);
   box-shadow:

@@ -77,8 +77,8 @@ export function Ventanas() {
         </h2>
         <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">
           Cada pieza se mide, fabrica e instala con sellado de precisión por
-          especialistas. Explora la línea completa: pasa el cursor sobre cada
-          tarjeta para verla en grande.
+          especialistas. Explora la línea completa: toca o pasa el cursor sobre
+          cada tarjeta para verla en grande.
         </p>
       </Reveal>
 
