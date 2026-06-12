@@ -42,16 +42,19 @@ export const SERVICIOS_DATA: Servicio[] = [
     ],
     galeriaImagenes: [
       {
-        src: "/proyecto-hospital-rosales.jpg",
-        alt: "Reconstrucción del edificio de especialidades del Hospital Nacional Rosales ejecutada por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1590486803833-1b5dc97ddb9c?w=1280&q=80",
+        alt: "Colada de concreto en cimentación de obra civil residencial",
       },
       {
-        src: "/proyecto-recintos-deportivos.jpg",
-        alt: "Obra en Recintos Deportivos El Polvorín y Ciudad Merliot por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1280&q=80",
+        alt: "Estructura metálica de acero en construcción de edificio",
       },
       {
-        src: "/proyecto-residencia-caceres.jpg",
-        alt: "Obra gris de Residencia Cáceres en Suchitoto ejecutada por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1280&q=80",
+        alt: "Trabajadores especializados en obra de construcción",
       },
     ],
     proyectosRelacionados: [
@@ -123,12 +126,14 @@ export const SERVICIOS_DATA: Servicio[] = [
     ],
     galeriaImagenes: [
       {
-        src: "/proyecto-centro-medico-san-alejo.jpg",
-        alt: "Centro Médico San Alejo — diseño y construcción ejecutada por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1280&q=80",
+        alt: "Planos y documentos de diseño arquitectónico sobre mesa de trabajo",
       },
       {
-        src: "/proyecto-residencia-caceres.jpg",
-        alt: "Residencia Cáceres en Suchitoto — diseño y obra integral BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1280&q=80",
+        alt: "Arquitecto revisando planos de proyecto en oficina de diseño",
       },
     ],
     proyectosRelacionados: ["centro-medico-san-alejo", "residencia-caceres"],
@@ -195,16 +200,19 @@ export const SERVICIOS_DATA: Servicio[] = [
     ],
     galeriaImagenes: [
       {
-        src: "/proyecto-hospital-rosales.jpg",
-        alt: "Instalaciones eléctricas e hidráulicas en reconstrucción del Hospital Nacional Rosales",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=1280&q=80",
+        alt: "Instalación de canalización eléctrica en construcción residencial",
       },
       {
-        src: "/proyecto-recintos-deportivos.jpg",
-        alt: "Drenajes y cajas de registro en Recintos Deportivos El Polvorín y Ciudad Merliot",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1280&q=80",
+        alt: "Técnico realizando instalación de cableado eléctrico en obra",
       },
       {
-        src: "/proyecto-residencia-caceres.jpg",
-        alt: "Red eléctrica e hidráulica completa de Residencia Cáceres en Suchitoto",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?w=1280&q=80",
+        alt: "Tubería y conexiones hidráulicas en instalación de red de agua potable",
       },
     ],
     proyectosRelacionados: [
@@ -285,8 +293,9 @@ export const SERVICIOS_DATA: Servicio[] = [
         alt: "Divisiones de baño en acero inoxidable de alta resistencia, suministradas por BOMEL",
       },
       {
-        src: "/proyecto-fgr-santa-elena.jpg",
-        alt: "Acabados y muro cortina en Edificio FGR Santa Elena ejecutados por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1280&q=80",
+        alt: "Acabados finos en interior de oficina comercial con revestimientos de lujo",
       },
     ],
     proyectosRelacionados: [
@@ -367,12 +376,14 @@ export const SERVICIOS_DATA: Servicio[] = [
         alt: "Puertas en ACM de alta resistencia para accesos de alto tráfico — BOMEL",
       },
       {
-        src: "/proyecto-fgr-santa-elena.jpg",
-        alt: "Muro cortina con vidrio insulado en Edificio FGR Santa Elena — BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1280&q=80",
+        alt: "Ventanas de aluminio de gran formato en residencia moderna",
       },
       {
-        src: "/proyecto-recintos-deportivos.jpg",
-        alt: "Ventanas y puertas de aluminio en Recintos Deportivos El Polvorín",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1515263487990-61b07816b324?w=1280&q=80",
+        alt: "Fachada de vidrio y aluminio en edificio comercial contemporáneo",
       },
     ],
     proyectosRelacionados: [
@@ -452,12 +463,14 @@ export const SERVICIOS_DATA: Servicio[] = [
         alt: "Lámina microperforada como revestimiento exterior de control solar en fachada",
       },
       {
-        src: "/proyecto-fgr-santa-elena.jpg",
-        alt: "Muro cortina con vidrio insulado y cortasol de aluminio — Edificio FGR Santa Elena",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1486591547781-1d6c1c2c5aa9?w=1280&q=80",
+        alt: "Fachada en panel ACM de aluminio compuesto en edificio corporativo",
       },
       {
-        src: "/proyecto-centro-medico-san-alejo.jpg",
-        alt: "Fachada ACM en Centro Médico San Alejo ejecutada por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1280&q=80",
+        alt: "Envolvente arquitectónica de aluminio en edificio institucional moderno",
       },
     ],
     proyectosRelacionados: ["fgr-santa-elena", "centro-medico-san-alejo"],

@@ -29,11 +29,14 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Fachada de muro cortina con ACM",
     ],
     especialidades: ["Obra civil", "Fachadas ACM", "Ventanería"],
-    imagen: "/proyecto-centro-medico-san-alejo.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-centro-medico-san-alejo.jpg",
-        alt: "Vista exterior del Centro Médico San Alejo con fachada ACM ejecutada por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1280&q=80",
+        alt: "Centro Médico San Alejo con fachada ACM ejecutada por BOMEL",
       },
     ],
     reto:
@@ -58,10 +61,13 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Puertas y ventanas de aluminio y vidrio",
     ],
     especialidades: ["Obra civil", "Instalaciones", "Ventanería", "Acabados"],
-    imagen: "/proyecto-hospital-rosales.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-hospital-rosales.jpg",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1280&q=80",
         alt: "Reconstrucción del edificio de especialidades del Hospital Nacional Rosales ejecutada por BOMEL",
       },
     ],
@@ -90,11 +96,14 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Drenajes y cajas de registro",
     ],
     especialidades: ["Ventanería", "Instalaciones"],
-    imagen: "/proyecto-recintos-deportivos.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-recintos-deportivos.jpg",
-        alt: "Ventanas y puertas de aluminio instaladas en Recintos Deportivos El Polvorín y Ciudad Merliot por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1280&q=80",
+        alt: "Instalaciones de aluminio en Recintos Deportivos El Polvorín y Ciudad Merliot por BOMEL",
       },
     ],
     reto:
@@ -120,10 +129,13 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Acabados para uso comercial intensivo",
     ],
     especialidades: ["Obra civil", "Acabados"],
-    imagen: "/proyecto-plaza-universitaria.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1562774053-701939374585?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-plaza-universitaria.jpg",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1562774053-701939374585?w=1280&q=80",
         alt: "Plaza Universitaria — estructura y acabados ejecutados por BOMEL para Constructora El Salvador",
       },
     ],
@@ -151,11 +163,14 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Fachada en ACM",
     ],
     especialidades: ["Fachadas ACM", "Ventanería"],
-    imagen: "/proyecto-fgr-santa-elena.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-fgr-santa-elena.jpg",
-        alt: "Muro cortina con vidrio insulado y cortasol de aluminio en Edificio FGR Santa Elena — diseño e instalación por BOMEL",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1280&q=80",
+        alt: "Muro cortina con vidrio insulado y cortasol de aluminio en Edificio FGR Santa Elena — BOMEL",
       },
     ],
     reto:
@@ -184,10 +199,13 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Obra civil",
       "Instalaciones",
     ],
-    imagen: "/proyecto-residencia-caceres.jpg",
+    // TODO: reemplazar con foto real de BOMEL
+    imagen:
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1280&q=80",
     galeria: [
       {
-        src: "/proyecto-residencia-caceres.jpg",
+        // TODO: reemplazar con foto real de BOMEL
+        src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1280&q=80",
         alt: "Residencia Cáceres en Suchitoto — obra gris, instalaciones y acabados llave en mano por BOMEL",
       },
     ],
