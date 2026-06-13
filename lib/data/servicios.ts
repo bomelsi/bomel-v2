@@ -132,8 +132,8 @@ export const SERVICIOS_DATA: Servicio[] = [
       },
       {
         // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1280&q=80",
-        alt: "Arquitecto revisando planos de proyecto en oficina de diseño",
+        src: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1280&q=80",
+        alt: "Proyecto arquitectónico contemporáneo terminado — diseño ejecutado en El Salvador",
       },
     ],
     proyectosRelacionados: ["centro-medico-san-alejo", "residencia-caceres"],
@@ -272,9 +272,9 @@ export const SERVICIOS_DATA: Servicio[] = [
       "Acabados finos y revestimientos arquitectónicos en El Salvador: ACM, WPC, tablaroca, enchapes y divisiones de vidrio. Lo que transforma una estructura en un lugar memorable.",
     // TODO: reemplazar con foto real de BOMEL
     heroImage:
-      "https://images.unsplash.com/photo-1497366754035-f200968a2f79?w=1280&q=80",
+      "https://images.unsplash.com/photo-1560472355-536de3962603?w=1280&q=80",
     heroImageAlt:
-      "Acabados finos y revestimientos interiores en edificio moderno en El Salvador",
+      "Acabados finos y revestimientos arquitectónicos en interior de edificio moderno",
     queIncluye: [
       "Recubrimientos en panel compuesto de aluminio (ACM)",
       "Deck y cladding en WPC (wood plastic composite)",

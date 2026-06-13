@@ -55,10 +55,9 @@ export function Nosotros() {
           <span className="text-brand-bright">tiene nombre: BOMEL.</span>
         </h2>
         <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-muted-foreground">
-          BOMEL nació para eliminar la fricción de construir: un solo equipo que
-          diseña, ejecuta y entrega tu proyecto completo. Olvídate de coordinar
-          cinco contratistas que se culpan entre sí — aquí hay una sola empresa,
-          un solo responsable y una sola promesa que se cumple.
+          BOMEL inició en 2018 brindando servicios de ventanería en aluminio y
+          PVC. Por la demanda de los clientes fue ampliando servicios hasta
+          convertirse en una empresa de servicios integrales de construcción.
         </p>
       </Reveal>
 

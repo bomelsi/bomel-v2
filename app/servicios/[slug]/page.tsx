@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Navbar } from "@/components/navbar";
@@ -8,7 +7,6 @@ import { Footer } from "@/components/sections/footer";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Reveal } from "@/components/reveal";
 import { SERVICIOS_DATA, getServicio } from "@/lib/data/servicios";
-import { PROYECTOS_DATA } from "@/lib/data/proyectos";
 import { SITE_URL, WHATSAPP_URL } from "@/lib/site";
 import { Cotizador } from "@/components/cotizador";
 
@@ -52,10 +50,6 @@ export default async function ServicioPage({ params }: Props) {
   const { slug } = await params;
   const servicio = getServicio(slug);
   if (!servicio) notFound();
-
-  const proyectosRelacionados = PROYECTOS_DATA.filter((p) =>
-    servicio.proyectosRelacionados.includes(p.slug)
-  );
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -230,46 +224,6 @@ export default async function ServicioPage({ params }: Props) {
             </div>
           </div>
         </section>
-
-        {/* ── Proyectos relacionados ── */}
-        {proyectosRelacionados.length > 0 && (
-          <section className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-            <Reveal>
-              <p className="section-kicker mb-5">Proyectos ejecutados</p>
-              <h2 className="font-heading text-2xl font-extrabold tracking-tight md:text-3xl mb-10">
-                Obras donde lo aplicamos
-              </h2>
-            </Reveal>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {proyectosRelacionados.map((proyecto, i) => (
-                <Reveal key={proyecto.slug} delay={i * 0.1}>
-                  <Link
-                    href={`/proyectos/${proyecto.slug}`}
-                    className="glass-panel glass-panel-hover group block overflow-hidden rounded-3xl"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={proyecto.imagen}
-                        alt={`Proyecto ${proyecto.nombre} ejecutado por BOMEL`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#060c0b] via-transparent to-transparent opacity-70" />
-                      <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-brand-bright backdrop-blur-md">
-                        {proyecto.categoria}
-                      </span>
-                    </div>
-                    <div className="p-5">
-                      <h3 className="font-heading font-bold text-base mb-1">{proyecto.nombre}</h3>
-                      <p className="text-xs text-brand-bright font-medium">Ver proyecto →</p>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* ── FAQ ── */}
         <section className="mx-auto max-w-3xl px-6 pb-16 md:pb-24">
