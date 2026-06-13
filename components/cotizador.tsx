@@ -7,32 +7,32 @@ import { motion, AnimatePresence } from "framer-motion";
 const TIPOS = [
   {
     id: "Ventana corrediza española",
-    img: "/images/productos/ventanas-aluminio-instalacion.webp",
+    img: "/images/productos/pagina3_img1.jpeg",
     icon: "🪟",
   },
   {
     id: "Ventana fija",
-    img: "/images/productos/ventanas-aluminio-fachada.webp",
+    img: "/images/productos/pagina3_img5.jpeg",
     icon: "🔳",
   },
   {
     id: "Ventana proyectable",
-    img: "/images/productos/ventanas-aluminio-exterior.webp",
+    img: "/images/productos/pagina3_img2.jpeg",
     icon: "↗️",
   },
   {
     id: "Puerta corrediza",
-    img: "/images/productos/puertas-acm-instaladas.webp",
+    img: "/images/productos/pagina6_img1.png",
     icon: "🚪",
   },
   {
     id: "Puerta embisagrada",
-    img: "/images/productos/puertas-acm-entrada.webp",
+    img: "/images/productos/pagina6_img3.jpeg",
     icon: "🚪",
   },
   {
     id: "Puerta automática",
-    img: "/images/productos/puertas-vidrio-automaticas.webp",
+    img: "/images/productos/pagina6_img2.jpeg",
     icon: "⚡",
   },
 ];
