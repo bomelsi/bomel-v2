@@ -179,7 +179,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="glass-panel mx-4 mt-2 rounded-2xl p-4 md:hidden"
+            className="mx-4 mt-2 rounded-2xl border border-white/10 bg-[#060c0b]/95 p-4 backdrop-blur-2xl md:hidden"
           >
             <ul className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
