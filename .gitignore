@@ -44,3 +44,5 @@ next-env.d.ts
 .claude/
 public/images/productos/pagina*.png
 public/images/productos/pagina*.jpeg
+
+.vercel
