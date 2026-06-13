@@ -16,7 +16,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Ventana Corrediza Española",
     description:
       "El clásico que nunca falla, elevado con aluminio de alta resistencia. Deslizamiento suave y silencioso durante años.",
-    imgSrc: "/ventana-corrediza-espanola.jpg",
+    imgSrc: "/images/productos/pagina3_img1.jpeg",
     icon: <MoveHorizontal className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -24,7 +24,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Ventana Fija",
     description:
       "Luz natural sin límites. Paneles de gran formato con sellado hermético, para vistas que merecen un marco a su altura.",
-    imgSrc: "/ventana-fija.jpg",
+    imgSrc: "/images/productos/pagina3_img5.jpeg",
     icon: <AppWindow className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -32,7 +32,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Ventana Proyectable",
     description:
       "Ventilación controlada incluso bajo la lluvia. Apertura hacia el exterior con herrajes de precisión que sellan al cerrar.",
-    imgSrc: "/ventana-proyectable.jpg",
+    imgSrc: "/images/productos/pagina3_img2.jpeg",
     icon: <PanelTop className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -40,7 +40,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta Corrediza",
     description:
       "Une interiores y exteriores sin esfuerzo. Máxima entrada de luz ocupando el mínimo espacio.",
-    imgSrc: "/puerta-corrediza.jpg",
+    imgSrc: "/images/productos/pagina6_img1.png",
     icon: <DoorOpen className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -48,7 +48,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta Embisagrada",
     description:
       "Robustez clásica con cierre de precisión. Seguridad, elegancia y un sellado que mantiene el clima donde debe estar.",
-    imgSrc: "/puerta-embisagrada.jpg",
+    imgSrc: "/images/productos/pagina6_img3.jpeg",
     icon: <DoorClosed className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -56,7 +56,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta con Sistema Automático",
     description:
       "Apertura inteligente para espacios de alto tráfico. La tecnología que recibe a tus visitantes antes que tu recepcionista.",
-    imgSrc: "/puerta-automatica.png",
+    imgSrc: "/images/productos/pagina6_img2.jpeg",
     icon: <Zap className="h-6 w-6" aria-hidden="true" />,
   },
 ];
