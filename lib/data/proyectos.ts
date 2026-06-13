@@ -30,12 +30,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "ACM",
     ],
     especialidades: ["Obra civil", "Fachadas ACM", "Ventanería"],
-    imagen:
-      "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1280&q=80",
+    imagen: "/images/proyectos/pag07_img01_1533x716.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1280&q=80",
-        alt: "Centro Médico San Alejo con fachada ACM ejecutada por BOMEL",
+        src: "/images/proyectos/pag07_img01_1533x716.jpg",
+        alt: "Centro Médico San Alejo — fachada roja con muro cortina de vidrio ejecutada por BOMEL",
       },
     ],
     reto:
@@ -61,12 +60,19 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Puertas y ventanas de aluminio y vidrio",
     ],
     especialidades: ["Obra civil", "Instalaciones", "Ventanería", "Acabados"],
-    imagen:
-      "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1280&q=80",
+    imagen: "/images/proyectos/pag04_img01_1533x716.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=1280&q=80",
-        alt: "Reconstrucción del edificio de especialidades del Hospital Nacional Rosales ejecutada por BOMEL",
+        src: "/images/proyectos/pag04_img01_1533x716.jpg",
+        alt: "Trabajadores de BOMEL con cascos azules en construcción interior del Hospital Nacional Rosales",
+      },
+      {
+        src: "/images/proyectos/pag04_img00_1533x716.jpg",
+        alt: "Colocación de pisos en interior del Hospital Nacional Rosales por BOMEL",
+      },
+      {
+        src: "/images/proyectos/pag05_img00_1532x862.jpg",
+        alt: "Fachada exterior renovada del Hospital Nacional Rosales — paneles ACM instalados por BOMEL",
       },
     ],
     reto:
@@ -96,12 +102,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Cortasoles",
     ],
     especialidades: ["Fachadas ACM", "Instalaciones"],
-    imagen:
-      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1280&q=80",
+    imagen: "/images/proyectos/pag05_img01_1533x716.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1280&q=80",
-        alt: "Estructura metálica con lámina microperforada en Hospital Nejapa Zona Norte — BOMEL",
+        src: "/images/proyectos/pag05_img01_1533x716.jpg",
+        alt: "Fachada de lámina microperforada azul en Hospital Nejapa Zona Norte — instalada por BOMEL",
       },
     ],
     reto:
@@ -128,12 +133,15 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Drenajes",
     ],
     especialidades: ["Ventanería", "Instalaciones"],
-    imagen:
-      "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1280&q=80",
+    imagen: "/images/proyectos/pag06_img01_1533x716.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=1280&q=80",
-        alt: "Instalaciones de aluminio en Recintos Deportivos El Polvorín y Ciudad Merliot por BOMEL",
+        src: "/images/proyectos/pag06_img01_1533x716.jpg",
+        alt: "Graderías azules con estructura de aluminio en Recinto Deportivo — instaladas por BOMEL",
+      },
+      {
+        src: "/images/proyectos/pag07_img00_1440x810.jpg",
+        alt: "Vista aérea del complejo deportivo con piscinas olímpicas y velódromo — proyecto BOMEL",
       },
     ],
     reto:
@@ -159,12 +167,15 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Estructura",
     ],
     especialidades: ["Obra civil", "Acabados"],
-    imagen:
-      "https://images.unsplash.com/photo-1562774053-701939374585?w=1280&q=80",
+    imagen: "/images/proyectos/pag03_img00_1533x708.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1562774053-701939374585?w=1280&q=80",
-        alt: "Plaza Universitaria — estructura y acabados ejecutados por BOMEL para Constructora El Salvador",
+        src: "/images/proyectos/pag03_img00_1533x708.jpg",
+        alt: "Plaza Universitaria — estructura de vidrio negro frente a edificio histórico con cúpula ejecutada por BOMEL",
+      },
+      {
+        src: "/images/proyectos/pag01_img00_743x1609.jpg",
+        alt: "Detalle de muro cortina negro con cúpula del edificio histórico — Plaza Universitaria por BOMEL",
       },
     ],
     reto:
@@ -190,12 +201,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Cortasol de aluminio tubo rectangular 6 pulgadas",
     ],
     especialidades: ["Fachadas ACM", "Ventanería"],
-    imagen:
-      "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1280&q=80",
+    imagen: "/images/proyectos/pag08_img00_783x1676.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=1280&q=80",
-        alt: "Muro cortina con vidrio insulado y cortasol de aluminio en Edificio FGR Santa Elena — BOMEL",
+        src: "/images/proyectos/pag08_img00_783x1676.jpg",
+        alt: "Cortasol de aluminio tubo rectangular visto desde abajo en FGR Edificio Santa Elena — instalado por BOMEL",
       },
     ],
     reto:
@@ -220,12 +230,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Instalaciones hidráulicas",
     ],
     especialidades: ["Obra civil", "Instalaciones"],
-    imagen:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1280&q=80",
+    imagen: "/images/proyectos/pag06_img00_1532x707.jpg",
     galeria: [
       {
-        src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1280&q=80",
-        alt: "Residencia Cáceres en Suchitoto — obra gris, instalaciones y techos por BOMEL",
+        src: "/images/proyectos/pag06_img00_1532x707.jpg",
+        alt: "Residencia Cáceres en Suchitoto — casa en construcción con techo azul ejecutada por BOMEL",
       },
     ],
     reto:
