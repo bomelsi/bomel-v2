@@ -42,7 +42,5 @@ next-env.d.ts
 
 # Claude Code
 .claude/
-public/images/productos/pagina*.png
-public/images/productos/pagina*.jpeg
 
 .vercel

@@ -42,19 +42,16 @@ export const SERVICIOS_DATA: Servicio[] = [
     ],
     galeriaImagenes: [
       {
-        // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1590486803833-1b5dc97ddb9c?w=1280&q=80",
-        alt: "Colada de concreto en cimentación de obra civil residencial",
+        src: "https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=1280&q=80",
+        alt: "Edificio institucional terminado con muro cortina de vidrio y paneles de aluminio — resultado de obra civil BOMEL",
       },
       {
-        // TODO: reemplazar con foto real de BOMEL
         src: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1280&q=80",
-        alt: "Estructura metálica de acero en construcción de edificio",
+        alt: "Trabajadores en obra de construcción con varilla de acero y cimentación",
       },
       {
-        // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1280&q=80",
-        alt: "Trabajadores especializados en obra de construcción",
+        src: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1280&q=80",
+        alt: "Obrero especializado en obra de construcción civil con equipo de seguridad y herramientas",
       },
     ],
     proyectosRelacionados: [
@@ -293,9 +290,8 @@ export const SERVICIOS_DATA: Servicio[] = [
         alt: "Divisiones de baño en acero inoxidable de alta resistencia, suministradas por BOMEL",
       },
       {
-        // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1280&q=80",
-        alt: "Acabados finos en interior de oficina comercial con revestimientos de lujo",
+        src: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1280&q=80",
+        alt: "Revestimiento exterior en paneles ACM y deck en WPC en edificio contemporáneo — acabados arquitectónicos BOMEL",
       },
     ],
     proyectosRelacionados: [
@@ -463,13 +459,11 @@ export const SERVICIOS_DATA: Servicio[] = [
         alt: "Lámina microperforada como revestimiento exterior de control solar en fachada",
       },
       {
-        // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1486591547781-1d6c1c2c5aa9?w=1280&q=80",
+        src: "https://images.unsplash.com/photo-1493397212122-2b85dda8106b?w=1280&q=80",
         alt: "Fachada en panel ACM de aluminio compuesto en edificio corporativo",
       },
       {
-        // TODO: reemplazar con foto real de BOMEL
-        src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1280&q=80",
+        src: "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?w=1280&q=80",
         alt: "Envolvente arquitectónica de aluminio en edificio institucional moderno",
       },
     ],
