@@ -4,7 +4,7 @@ import Link from "next/link";
 import { RotatingWord } from "@/components/rotating-word";
 import { SocialConnect } from "@/components/social-connect";
 import { FooterWordmark } from "@/components/footer-wordmark";
-import { EMAIL, NAV_LINKS, PHONE_E164, WHATSAPP_NUMBER, WHATSAPP_URL } from "@/lib/site";
+import { EMAIL, PHONE_E164, WHATSAPP_NUMBER } from "@/lib/site";
 import { SERVICIOS_DATA } from "@/lib/data/servicios";
 import { PROYECTOS_DATA } from "@/lib/data/proyectos";
 
@@ -73,7 +73,7 @@ export function Footer() {
 
       {/* ── Columnas de navegación compactas ── */}
       <div className="mx-auto max-w-6xl px-6 pb-12 pt-8">
-        <div className="grid grid-cols-1 gap-8 border-t border-white/5 pt-10 sm:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 border-t border-white/5 pt-10 sm:grid-cols-3">
 
           {/* Columna 1 — Marca + NAP */}
           <div>
@@ -122,8 +122,8 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Columnas 2-4 — Navegación en fila horizontal */}
-          <div className="grid grid-cols-2 gap-6 sm:col-span-3 sm:grid-cols-3">
+          {/* Columnas 2-3 — Servicios y Proyectos (lado a lado en móvil) */}
+          <div className="grid grid-cols-2 gap-6 sm:contents">
 
             {/* Servicios */}
             <div>
@@ -156,7 +156,7 @@ export function Footer() {
                       href={`/proyectos/${p.slug}`}
                       className="text-xs text-muted-foreground transition-colors hover:text-brand-bright"
                     >
-                      {p.nombre}
+                      {p.slug === "recintos-deportivos" ? "Recintos Deportivos" : p.nombre}
                     </Link>
                   </li>
                 ))}
@@ -169,43 +169,6 @@ export function Footer() {
                   </Link>
                 </li>
               </ul>
-            </div>
-
-            {/* Navegación rápida */}
-            <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-brand-bright">
-                Navegación
-              </p>
-              <ul className="space-y-1.5">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <a
-                      href={link.href}
-                      className="text-xs text-muted-foreground transition-colors hover:text-brand-bright"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-                <li>
-                  <Link
-                    href="/blog"
-                    className="text-xs text-muted-foreground transition-colors hover:text-brand-bright"
-                  >
-                    Blog
-                  </Link>
-                </li>
-              </ul>
-              <div className="mt-5">
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-full border border-brand/40 bg-brand-strong/15 px-4 py-1.5 font-heading text-xs font-bold tracking-wider text-brand-bright transition-all hover:-translate-y-0.5 hover:bg-brand-strong/30 hover:shadow-[0_8px_24px_-8px_rgba(45,212,191,0.5)] inline-block"
-                >
-                  {WHATSAPP_NUMBER}
-                </a>
-              </div>
             </div>
 
           </div>

@@ -60,11 +60,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Puertas y ventanas de aluminio y vidrio",
     ],
     especialidades: ["Obra civil", "Instalaciones", "Ventanería", "Acabados"],
-    imagen: "/images/proyectos/pag04_img01_1533x716.jpg",
+    imagen: "/NUEVOHOSPSITALROSALES.jpg",
     galeria: [
       {
-        src: "/images/proyectos/pag04_img01_1533x716.jpg",
-        alt: "Trabajadores de BOMEL con cascos azules en construcción interior del Hospital Nacional Rosales",
+        src: "/NUEVOHOSPSITALROSALES.jpg",
+        alt: "Vista aérea nocturna del Hospital Nacional Rosales renovado — obra ejecutada por BOMEL en San Salvador",
       },
       {
         src: "/images/proyectos/pag04_img00_1533x716.jpg",
@@ -201,11 +201,11 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Cortasol de aluminio tubo rectangular 6 pulgadas",
     ],
     especialidades: ["Fachadas ACM", "Ventanería"],
-    imagen: "/images/proyectos/pag08_img00_783x1676.jpg",
+    imagen: "/Fiscalia-General-de-la-Republica.jpg",
     galeria: [
       {
-        src: "/images/proyectos/pag08_img00_783x1676.jpg",
-        alt: "Cortasol de aluminio tubo rectangular visto desde abajo en FGR Edificio Santa Elena — instalado por BOMEL",
+        src: "/Fiscalia-General-de-la-Republica.jpg",
+        alt: "Fachada del Edificio FGR Santa Elena con muro cortina y cortasol de aluminio — obra ejecutada por BOMEL",
       },
     ],
     reto:
@@ -230,10 +230,10 @@ export const PROYECTOS_DATA: ProyectoData[] = [
       "Instalaciones hidráulicas",
     ],
     especialidades: ["Obra civil", "Instalaciones"],
-    imagen: "/images/proyectos/pag06_img00_1532x707.jpg",
+    imagen: "/residencia-caceres-construccion.jpg",
     galeria: [
       {
-        src: "/images/proyectos/pag06_img00_1532x707.jpg",
+        src: "/residencia-caceres-construccion.jpg",
         alt: "Residencia Cáceres en Suchitoto — casa en construcción con techo azul ejecutada por BOMEL",
       },
     ],

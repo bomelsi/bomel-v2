@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const TIPOS = [
   {
     id: "Ventana corrediza española",
-    img: "/images/productos/pagina3_img1.jpeg",
+    img: "/ventana-corrediza-espanola.jpg",
     icon: "🪟",
   },
   {
@@ -22,7 +22,7 @@ const TIPOS = [
   },
   {
     id: "Puerta corrediza",
-    img: "/images/productos/pagina6_img1.png",
+    img: "/puerta-corrediza.jpg",
     icon: "🚪",
   },
   {
@@ -32,7 +32,7 @@ const TIPOS = [
   },
   {
     id: "Puerta automática",
-    img: "/images/productos/pagina6_img2.jpeg",
+    img: "/puerta-automatica.png",
     icon: "⚡",
   },
 ];

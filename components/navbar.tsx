@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
+import { CONTACTO_LINK, NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
 import { SERVICIOS_DATA } from "@/lib/data/servicios";
 
 const SERVICIOS_MENU = SERVICIOS_DATA.map((s) => ({
@@ -30,10 +30,8 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-[100]">
       <nav
         className={cn(
-          "mx-4 mt-4 flex max-w-6xl items-center justify-between rounded-2xl px-4 py-2.5 md:px-6 lg:mx-auto transition-all duration-500",
-          scrolled
-            ? "glass-panel"
-            : "bg-transparent border border-transparent"
+          "mx-4 mt-4 flex max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-[#060c0b]/70 px-4 py-2.5 backdrop-blur-xl md:px-6 lg:mx-auto transition-all duration-500",
+          scrolled && "bg-[#060c0b]/90"
         )}
         aria-label="Navegación principal"
       >
@@ -133,6 +131,15 @@ export function Navbar() {
             >
               Blog
             </Link>
+          </li>
+
+          <li>
+            <a
+              href={CONTACTO_LINK.href}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-bright"
+            >
+              {CONTACTO_LINK.label}
+            </a>
           </li>
         </ul>
 
@@ -256,6 +263,16 @@ export function Navbar() {
                 >
                   Blog
                 </Link>
+              </li>
+
+              <li>
+                <a
+                  href={CONTACTO_LINK.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
+                >
+                  {CONTACTO_LINK.label}
+                </a>
               </li>
 
               <li className="mt-2">

@@ -25,7 +25,7 @@ const PROYECTOS: Proyecto[] = [
     categoria: "Salud",
     descripcion:
       "Reconstrucción del edificio de especialidades: paredes, pisos, divisiones, red eléctrica, puertas y ventanas. Infraestructura crítica, cero margen de error.",
-    imagen: "/proyecto-hospital-rosales.jpg",
+    imagen: "/NUEVOHOSPSITALROSALES.jpg",
     slug: "hospital-nacional-rosales",
   },
   {
@@ -49,7 +49,7 @@ const PROYECTOS: Proyecto[] = [
     categoria: "Corporativo",
     descripcion:
       "Muro cortina con vidrio insulado y cortasol de aluminio para Solaire: una fachada que trabaja tan duro como quienes la habitan.",
-    imagen: "/proyecto-fgr-santa-elena.jpg",
+    imagen: "/Fiscalia-General-de-la-Republica.jpg",
     slug: "fgr-santa-elena",
   },
   {
@@ -57,7 +57,7 @@ const PROYECTOS: Proyecto[] = [
     categoria: "Residencial",
     descripcion:
       "Diseño y ejecución integral en Suchitoto: obra gris, instalaciones eléctricas, techos e hidráulica de una residencia familiar completa.",
-    imagen: "/proyecto-residencia-caceres.jpg",
+    imagen: "/residencia-caceres-construccion.jpg",
     slug: "residencia-caceres",
   },
 ];

@@ -16,7 +16,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Ventana Corrediza Española",
     description:
       "El clásico que nunca falla, elevado con aluminio de alta resistencia. Deslizamiento suave y silencioso durante años.",
-    imgSrc: "/images/productos/pagina3_img1.jpeg",
+    imgSrc: "/ventana-corrediza-espanola.jpg",
     icon: <MoveHorizontal className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -40,7 +40,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta Corrediza",
     description:
       "Une interiores y exteriores sin esfuerzo. Máxima entrada de luz ocupando el mínimo espacio.",
-    imgSrc: "/images/productos/pagina6_img1.png",
+    imgSrc: "/puerta-corrediza.jpg",
     icon: <DoorOpen className="h-6 w-6" aria-hidden="true" />,
   },
   {
@@ -56,7 +56,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta con Sistema Automático",
     description:
       "Apertura inteligente para espacios de alto tráfico. La tecnología que recibe a tus visitantes antes que tu recepcionista.",
-    imgSrc: "/images/productos/pagina6_img2.jpeg",
+    imgSrc: "/puerta-automatica.png",
     icon: <Zap className="h-6 w-6" aria-hidden="true" />,
   },
 ];
