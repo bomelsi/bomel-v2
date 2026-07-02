@@ -16,7 +16,7 @@ const TESTIMONIOS: Testimonio[] = [
     texto:
       "BOMEL nos entregó la fachada del edificio en la fecha que firmaron, sin un solo cambio en el presupuesto. Eso en construcción casi no existe.",
     nombre: "Ing. Carlos Martínez",
-    cargo: "Gerente de Proyecto, Desarrolladora Cumbres",
+    cargo: "Gerente de Proyecto",
     iniciales: "CM",
   },
   {
