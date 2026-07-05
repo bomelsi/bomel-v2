@@ -97,6 +97,49 @@ const INJECTED_STYLES = `
       background: linear-gradient(to top, rgba(3,8,7,0.85) 0%, rgba(3,8,7,0.35) 30%, transparent 60%),
                   linear-gradient(to bottom, rgba(3,8,7,0.6) 0%, transparent 25%);
   }
+
+  /*
+   * Entrada del texto crítico: solo CSS, sin depender de que cargue GSAP.
+   * Pinta visible de inmediato (LCP) y anima con una animación nativa
+   * que nunca queda "a la espera" de JavaScript.
+   */
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(24px); filter: blur(10px); }
+    to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
+  }
+  @keyframes hero-wipe-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0% 0 0); }
+  }
+  .text-track {
+    animation: hero-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .text-days {
+    animation: hero-wipe-reveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /*
+   * La tarjeta cinematográfica (wordmark + canvas de la obra) es parte de
+   * la secuencia ligada al scroll: debe permanecer fuera de vista desde el
+   * primer pintado. GSAP, al cargar, fija exactamente estos mismos valores
+   * antes de animar por scroll — así nunca hay un salto ni un flash entre
+   * el estado "sin JS" y el estado "con JS ya cargado".
+   */
+  .main-card {
+      transform: translateY(calc(100vh + 200px));
+  }
+  .card-brand,
+  .card-left-text,
+  .floating-badge {
+      opacity: 0;
+      visibility: hidden;
+  }
+  .cta-wrapper {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.8);
+      filter: blur(30px);
+  }
 `;
 
 const FRAME_COUNT = 121;
@@ -165,7 +208,10 @@ export function CinematicHero({
 
         {/* CAPA DE FONDO: Taglines */}
         <div className="hero-text-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 will-change-transform transform-style-3d">
-          <p className="text-track gsap-reveal section-kicker mb-6 !text-base md:!text-lg">
+          <p
+            className="text-track section-kicker mb-6 !text-base md:!text-lg"
+            style={{ animationDelay: "0s" }}
+          >
             {brandKicker} {brandName}
           </p>
           <h1 className="sr-only">
@@ -173,23 +219,28 @@ export function CinematicHero({
           </h1>
           <p
             aria-hidden="true"
-            className="text-track gsap-reveal text-3d-matte font-heading text-4xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mb-2"
+            className="text-track text-3d-matte font-heading text-4xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight mb-2"
+            style={{ animationDelay: "0.1s" }}
           >
             {tagline1}
           </p>
           <p
             aria-hidden="true"
-            className="text-days gsap-reveal text-silver-matte font-heading text-4xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tighter"
+            className="text-days text-silver-matte font-heading text-4xl md:text-7xl lg:text-[5.5rem] font-extrabold tracking-tighter"
+            style={{ animationDelay: "0.2s" }}
           >
             {tagline2}
           </p>
-          <p className="text-track gsap-reveal mt-8 text-sm md:text-base text-muted-foreground tracking-widest uppercase">
+          <p
+            className="text-track mt-8 text-sm md:text-base text-muted-foreground tracking-widest uppercase"
+            style={{ animationDelay: "0.4s" }}
+          >
             Desliza para construir
           </p>
         </div>
 
         {/* CAPA DE FONDO 2: Clímax — el slogan de la marca */}
-        <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 gsap-reveal pointer-events-auto will-change-transform">
+        <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-full px-4 pointer-events-auto will-change-transform">
           <p className="section-kicker mb-6">{brandName}</p>
           <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-silver-matte">
             {ctaHeading1}
@@ -225,7 +276,7 @@ export function CinematicHero({
         >
           <div
             ref={mainCardRef}
-            className="main-card premium-depth-card relative overflow-hidden gsap-reveal pointer-events-auto w-[92vw] md:w-[85vw] h-[85svh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
+            className="main-card premium-depth-card relative overflow-hidden pointer-events-auto w-[92vw] md:w-[85vw] h-[85svh] md:h-[85vh] rounded-[32px] md:rounded-[40px]"
           >
             <div className="card-sheen" aria-hidden="true" />
 
@@ -240,7 +291,7 @@ export function CinematicHero({
             </div>
 
             {/* Marca, arriba a la derecha */}
-            <div className="card-brand gsap-reveal absolute top-24 right-6 md:top-28 md:right-12 z-20 text-right">
+            <div className="card-brand absolute top-24 right-6 md:top-28 md:right-12 z-20 text-right">
               <p className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-brand-bright mb-1">
                 {brandKicker}
               </p>
@@ -250,7 +301,7 @@ export function CinematicHero({
             </div>
 
             {/* Mensaje principal, abajo a la izquierda */}
-            <div className="card-left-text gsap-reveal absolute bottom-8 left-6 md:bottom-14 md:left-12 z-20 max-w-md text-left">
+            <div className="card-left-text absolute bottom-8 left-6 md:bottom-14 md:left-12 z-20 max-w-md text-left">
               <h3 className="font-heading text-white text-2xl md:text-3xl lg:text-4xl font-bold mb-3 tracking-tight">
                 {cardHeading}
               </h3>

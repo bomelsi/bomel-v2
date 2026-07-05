@@ -64,38 +64,20 @@ export function CinematicHeroMotion({
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      gsap.set(".text-track", {
-        autoAlpha: 0,
-        y: 60,
-        scale: 0.85,
-        filter: "blur(20px)",
-        rotationX: -20,
-      });
-      gsap.set(".text-days", { autoAlpha: 1, clipPath: "inset(0 100% 0 0)" });
+      // El texto crítico (taglines) ya se pinta y anima solo con CSS desde
+      // el primer frame (ver INJECTED_STYLES en cinematic-hero.tsx) — GSAP
+      // no lo toca para no reintroducir un salto entre "sin JS" y "con JS".
+      //
+      // La tarjeta cinematográfica sí depende del scroll, así que fijamos
+      // aquí EXACTAMENTE los mismos valores que ya estableció el CSS por
+      // defecto (fuera de vista). Como coinciden, no hay ningún cambio
+      // visual en el instante en que GSAP toma el control.
       gsap.set(".main-card", { y: window.innerHeight + 200, autoAlpha: 1 });
       gsap.set(
         [".canvas-stage", ".card-left-text", ".card-brand", ".floating-badge"],
         { autoAlpha: 0 }
       );
       gsap.set(".cta-wrapper", { autoAlpha: 0, scale: 0.8, filter: "blur(30px)" });
-
-      // Entrada de los taglines al cargar
-      const introTl = gsap.timeline({ delay: 0.3 });
-      introTl
-        .to(".text-track", {
-          duration: 1.8,
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          rotationX: 0,
-          ease: "expo.out",
-        })
-        .to(
-          ".text-days",
-          { duration: 1.4, clipPath: "inset(0 0% 0 0)", ease: "power4.inOut" },
-          "-=1.0"
-        );
 
       // El contenedor alto (600vh) + sticky reemplaza al pin de GSAP.
       // ScrollTrigger calcula la fracción de scroll y sincroniza
