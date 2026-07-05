@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export interface CardItem {
@@ -88,11 +89,13 @@ export const ExpandingCards = React.forwardRef<
           tabIndex={0}
           data-active={activeIndex === index}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element -- la transición fluida del grid necesita <img> nativo */}
-          <img
+          <Image
             src={item.imgSrc}
             alt={item.title}
-            className="absolute inset-0 h-full w-full object-cover transition-all duration-300 ease-out group-data-[active=true]:scale-100 group-data-[active=true]:grayscale-0 scale-110 grayscale"
+            fill
+            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 60vw, 40vw"
+            loading="lazy"
+            className="object-cover transition-all duration-300 ease-out group-data-[active=true]:scale-100 group-data-[active=true]:grayscale-0 scale-110 grayscale"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#04211d]/90 via-black/40 to-transparent" />
 

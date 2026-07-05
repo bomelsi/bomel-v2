@@ -32,7 +32,7 @@ const TIPOS = [
   },
   {
     id: "Puerta automática",
-    img: "/puerta-automatica.png",
+    img: "/puerta-automatica.jpg",
     icon: "⚡",
   },
 ];

@@ -56,7 +56,7 @@ const PRODUCTOS: CardItem[] = [
     title: "Puerta con Sistema Automático",
     description:
       "Apertura inteligente para espacios de alto tráfico. La tecnología que recibe a tus visitantes antes que tu recepcionista.",
-    imgSrc: "/puerta-automatica.png",
+    imgSrc: "/puerta-automatica.jpg",
     icon: <Zap className="h-6 w-6" aria-hidden="true" />,
   },
 ];
