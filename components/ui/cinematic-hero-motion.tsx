@@ -20,9 +20,10 @@ interface CinematicHeroMotionProps {
 }
 
 /**
- * Coreografía GSAP + ScrollTrigger del hero, cargada como chunk aparte
- * (dynamic import con ssr:false) para no sumar el peso de GSAP al bundle
- * inicial ni retrasar el LCP del texto crítico, que ya se pinta sin JS.
+ * Coreografía GSAP + ScrollTrigger de la sección "Casa cinemática"
+ * (components/sections/casa-cinematica.tsx), cargada como chunk aparte
+ * (dynamic import con ssr:false). Esta sección vive después del hero
+ * estático, así que su JS nunca compite con la apertura de la página.
  */
 export function CinematicHeroMotion({
   containerRef,
@@ -64,11 +65,7 @@ export function CinematicHeroMotion({
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      // El texto crítico (taglines) ya se pinta y anima solo con CSS desde
-      // el primer frame (ver INJECTED_STYLES en cinematic-hero.tsx) — GSAP
-      // no lo toca para no reintroducir un salto entre "sin JS" y "con JS".
-      //
-      // La tarjeta cinematográfica sí depende del scroll, así que fijamos
+      // La tarjeta cinematográfica depende del scroll, así que fijamos
       // aquí EXACTAMENTE los mismos valores que ya estableció el CSS por
       // defecto (fuera de vista). Como coinciden, no hay ningún cambio
       // visual en el instante en que GSAP toma el control.
@@ -98,7 +95,7 @@ export function CinematicHeroMotion({
 
       scrollTl
         .to(
-          [".hero-text-wrapper", ".bg-grid-theme"],
+          ".bg-grid-theme",
           { scale: 1.15, filter: "blur(20px)", opacity: 0.15, ease: "power2.inOut", duration: 2 },
           0
         )
@@ -138,7 +135,6 @@ export function CinematicHeroMotion({
           duration: 1,
           stagger: 0.05,
         })
-        .set(".hero-text-wrapper", { autoAlpha: 0 })
         .set(".cta-wrapper", { autoAlpha: 1 })
         .to(".main-card", {
           width: isMobile ? "92vw" : "85vw",
