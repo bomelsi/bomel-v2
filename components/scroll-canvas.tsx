@@ -70,12 +70,10 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       }
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Contenedor vertical (móvil): contain-fit para que la casa quepa
-      // completa. Contenedor horizontal (desktop): cover-fit como siempre.
-      const fitContain = cssHeight > cssWidth;
-      const scale = fitContain
-        ? Math.min(cssWidth / img.width, cssHeight / img.height)
-        : Math.max(cssWidth / img.width, cssHeight / img.height);
+      // Contain-fit siempre: la casa se ve completa. Los bordes que quedan
+      // sin cubrir (laterales en pantallas anchas, superior/inferior en
+      // verticales) se desvanecen hacia el fondo oscuro de la tarjeta.
+      const scale = Math.min(cssWidth / img.width, cssHeight / img.height);
       const drawWidth = img.width * scale;
       const drawHeight = img.height * scale;
       const dx = (cssWidth - drawWidth) / 2;
@@ -83,11 +81,10 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       ctx.clearRect(0, 0, cssWidth, cssHeight);
       ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
 
-      // En contain-fit, desvanece los bordes superior e inferior de la
-      // imagen borrando alfa, para que se fundan con el fondo de la tarjeta.
-      if (fitContain) {
+      ctx.globalCompositeOperation = "destination-out";
+      if (drawHeight < cssHeight - 1) {
+        // Bordes superior e inferior desvanecidos
         const fade = Math.min(drawHeight * 0.18, 90);
-        ctx.globalCompositeOperation = "destination-out";
         const top = ctx.createLinearGradient(0, dy, 0, dy + fade);
         top.addColorStop(0, "rgba(0,0,0,1)");
         top.addColorStop(1, "rgba(0,0,0,0)");
@@ -103,8 +100,27 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
         bottom.addColorStop(1, "rgba(0,0,0,1)");
         ctx.fillStyle = bottom;
         ctx.fillRect(dx, dy + drawHeight - fade, drawWidth, fade);
-        ctx.globalCompositeOperation = "source-over";
       }
+      if (drawWidth < cssWidth - 1) {
+        // Bordes laterales desvanecidos
+        const fade = Math.min(drawWidth * 0.18, 140);
+        const left = ctx.createLinearGradient(dx, 0, dx + fade, 0);
+        left.addColorStop(0, "rgba(0,0,0,1)");
+        left.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = left;
+        ctx.fillRect(dx, dy, fade, drawHeight);
+        const right = ctx.createLinearGradient(
+          dx + drawWidth - fade,
+          0,
+          dx + drawWidth,
+          0
+        );
+        right.addColorStop(0, "rgba(0,0,0,0)");
+        right.addColorStop(1, "rgba(0,0,0,1)");
+        ctx.fillStyle = right;
+        ctx.fillRect(dx + drawWidth - fade, dy, fade, drawHeight);
+      }
+      ctx.globalCompositeOperation = "source-over";
     }, [nearestLoaded]);
 
     const scheduleRender = useCallback(() => {

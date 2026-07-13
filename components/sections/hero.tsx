@@ -84,6 +84,15 @@ const INJECTED_STYLES = `
                   linear-gradient(to bottom, rgba(3,8,7,0.6) 0%, transparent 25%);
   }
 
+  /* Desktop: la imagen va de borde a borde, con degradado arriba y abajo
+     para fundirse con el fondo oscuro del hero */
+  @media (min-width: 768px) {
+    .canvas-veil {
+        background: linear-gradient(to top, rgba(3,8,7,0.95) 0%, rgba(3,8,7,0.4) 18%, transparent 40%),
+                    linear-gradient(to bottom, rgba(3,8,7,0.95) 0%, rgba(3,8,7,0.4) 18%, transparent 40%);
+    }
+  }
+
   /* Entrada del hero: kicker + logo + hint, una sola vez, solo CSS */
   @keyframes hero-fade-up {
     from { opacity: 0; transform: translateY(24px); filter: blur(10px); }
@@ -179,9 +188,9 @@ export function Hero({
 
         {/* Headline visible desde el inicio (arriba de la imagen) */}
         <div className="hero-text-heading hero-entrance absolute top-28 md:top-32 left-0 right-0 z-30 px-4 text-center pointer-events-none">
-          <h1 className="font-heading text-2xl font-bold leading-[1.1] tracking-tight md:text-4xl lg:text-5xl">
-            <span className="text-3d-matte block">{tagline1}</span>
-            <span className="text-silver-matte block font-extrabold tracking-tighter">
+          <h1 className="font-heading text-2xl font-bold leading-[1.1] tracking-tight md:text-3xl lg:text-4xl">
+            <span className="text-3d-matte block md:inline">{tagline1}</span>{" "}
+            <span className="text-silver-matte block md:inline font-extrabold tracking-tighter">
               {tagline2}
             </span>
           </h1>
@@ -189,7 +198,7 @@ export function Hero({
 
         {/* Descripción visible desde el inicio (debajo de la imagen) */}
         <div className="hero-text-description hero-entrance absolute bottom-32 md:bottom-16 left-0 right-0 z-30 px-4 text-center pointer-events-none">
-          <p className="mx-auto max-w-xl text-sm text-muted-foreground md:text-base">
+          <p className="mx-auto max-w-xl text-sm text-muted-foreground md:max-w-2xl md:text-lg md:text-foreground/75">
             {ctaDescription}
           </p>
         </div>
@@ -210,12 +219,12 @@ export function Hero({
 
         {/* CAPA FRONTAL: Tarjeta con la casa (visible de inmediato en tamaño reducido) */}
         <div
-          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none md:pt-36 md:pb-24"
           style={{ perspective: "1500px" }}
         >
           <div
             ref={mainCardRef}
-            className="main-card premium-depth-card relative overflow-hidden pointer-events-auto w-full h-[52svh] md:h-[60vh] rounded-none"
+            className="main-card premium-depth-card relative overflow-hidden pointer-events-auto w-full h-[52svh] rounded-none md:h-[63vh]"
           >
             <div className="card-sheen" aria-hidden="true" />
 
