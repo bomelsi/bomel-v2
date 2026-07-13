@@ -1,5 +1,4 @@
-import { CinematicHero } from "@/components/ui/cinematic-hero";
-import { CasaCinematica } from "@/components/sections/casa-cinematica";
+import { Hero } from "@/components/sections/hero";
 import { MagneticCta } from "@/components/magnetic-cta";
 import { Navbar } from "@/components/navbar";
 import { ClientesBanner } from "@/components/sections/clientes";
@@ -16,12 +15,11 @@ export default function Home() {
     <>
       <Navbar />
       <main className="flex-1">
-        <CinematicHero />
-        <CasaCinematica />
-        <ClientesBanner />
+        <Hero />
         <MagneticCta />
         <Nosotros />
         <Testimonios />
+        <ClientesBanner />
         <Servicios />
         <Ventanas />
         <BlogPreview />

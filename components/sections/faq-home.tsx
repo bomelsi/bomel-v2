@@ -58,56 +58,50 @@ export function FaqHome() {
         className="absolute -left-40 top-1/3 -z-10 h-[400px] w-[400px] rounded-full bg-brand-strong/15 blur-[120px]"
       />
 
-      <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-        {/* Columna izquierda — header + CTA */}
-        <Reveal>
-          <div className="lg:sticky lg:top-32">
-            <p className="section-kicker mb-5">FAQ</p>
-            <h2 className="font-heading text-3xl md:text-4xl font-extrabold tracking-tight leading-[1.1] mb-6">
-              Preguntas que nos hacen{" "}
-              <span className="text-brand-bright">antes de cotizar.</span>
-            </h2>
-            <p className="text-base leading-relaxed text-muted-foreground mb-10">
-              Si tu duda no está aquí, escríbenos por WhatsApp. Respondemos en minutos durante el horario de atención.
-            </p>
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-brand-bright to-brand-strong px-6 py-3 text-sm font-bold text-[#04211d] shadow-[0_8px_24px_-8px_rgba(45,212,191,0.6)] transition-transform hover:-translate-y-0.5"
-            >
-              Hacer una pregunta →
-            </a>
-          </div>
-        </Reveal>
+      <Reveal className="mb-12 text-center">
+        <p className="section-kicker justify-center mb-5">FAQ</p>
+        <h2 className="font-heading text-3xl md:text-4xl font-extrabold tracking-tight leading-[1.1] mb-6 mx-auto max-w-2xl">
+          Preguntas que nos hacen{" "}
+          <span className="text-brand-bright">antes de cotizar.</span>
+        </h2>
+        <p className="text-base leading-relaxed text-muted-foreground mb-10 mx-auto max-w-2xl">
+          Si tu duda no está aquí, escríbenos por WhatsApp. Respondemos en minutos durante el horario de atención.
+        </p>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-brand-bright to-brand-strong px-6 py-3 text-sm font-bold text-[#04211d] shadow-[0_8px_24px_-8px_rgba(45,212,191,0.6)] transition-transform hover:-translate-y-0.5"
+        >
+          Hacer una pregunta →
+        </a>
+      </Reveal>
 
-        {/* Columna derecha — acordeón */}
-        <div className="space-y-3">
-          {FAQS.map((faq, i) => (
-            <Reveal key={faq.pregunta} delay={i * 0.07}>
-              <details className="glass-panel group rounded-2xl px-6 py-5 open:pb-6">
-                <summary className="flex cursor-pointer items-center justify-between gap-4 font-heading font-bold text-sm md:text-base list-none">
-                  {faq.pregunta}
-                  <span className="shrink-0 text-brand-bright transition-transform duration-300 group-open:rotate-45">
-                    <svg
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </span>
-                </summary>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  {faq.respuesta}
-                </p>
-              </details>
-            </Reveal>
-          ))}
-        </div>
+      <div className="space-y-3 mx-auto max-w-2xl">
+        {FAQS.map((faq, i) => (
+          <Reveal key={faq.pregunta} delay={i * 0.07}>
+            <details className="glass-panel group rounded-2xl px-6 py-5 open:pb-6">
+              <summary className="flex cursor-pointer items-center justify-between gap-4 font-heading font-bold text-sm md:text-base list-none">
+                {faq.pregunta}
+                <span className="shrink-0 text-brand-bright transition-transform duration-300 group-open:rotate-45">
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                {faq.respuesta}
+              </p>
+            </details>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

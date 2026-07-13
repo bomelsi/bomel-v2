@@ -20,17 +20,15 @@ export async function BlogPreview() {
         className="absolute -right-32 top-1/4 -z-10 h-[380px] w-[380px] rounded-full bg-brand-strong/10 blur-[120px]"
       />
 
-      <Reveal className="mb-12 flex items-end justify-between gap-4 flex-wrap">
-        <div>
-          <p className="section-kicker mb-4">Desde el blog</p>
-          <h2 className="font-heading text-3xl font-extrabold tracking-tight md:text-4xl">
-            Construir bien empieza{" "}
-            <span className="text-brand-bright">por saber más.</span>
-          </h2>
-        </div>
+      <Reveal className="mb-12 text-center">
+        <p className="section-kicker justify-center mb-4">Desde el blog</p>
+        <h2 className="font-heading text-3xl font-extrabold tracking-tight md:text-4xl mx-auto max-w-2xl mb-6">
+          Construir bien empieza{" "}
+          <span className="text-brand-bright">por saber más.</span>
+        </h2>
         <Link
           href="/blog"
-          className="shrink-0 rounded-full border border-brand/40 px-5 py-2 text-sm font-semibold text-brand-bright transition-colors hover:bg-brand-strong/15"
+          className="inline-block rounded-full border border-brand/40 px-5 py-2 text-sm font-semibold text-brand-bright transition-colors hover:bg-brand-strong/15"
         >
           Ver todos los artículos →
         </Link>
