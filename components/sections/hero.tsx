@@ -165,7 +165,7 @@ export function Hero({
   return (
     <div
       ref={containerRef}
-      className={"relative w-full h-[600svh] " + (className ?? "")}
+      className={"relative w-full h-[400svh] md:h-[600svh] " + (className ?? "")}
       {...props}
     >
       <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
@@ -175,10 +175,13 @@ export function Hero({
         canvasApiRef={canvasApiRef}
       />
 
-      {/* Escenario sticky: permanece fijo mientras el contenedor de 600svh hace scroll */}
+      {/* Escenario sticky: permanece fijo mientras el contenedor alto hace scroll.
+          overflowAnchor:"none" evita que el navegador reancle el scroll a este
+          bloque cuando cambia el viewport visible (barra de direcciones),
+          una causa conocida de saltos en scroll-jacking en móvil. */}
       <div
         className="sticky top-0 h-[100svh] md:h-screen w-full overflow-hidden bg-background text-foreground font-sans"
-        style={{ perspective: "1500px" }}
+        style={{ perspective: "1500px", overflowAnchor: "none" }}
       >
         <div className="film-grain" aria-hidden="true" />
         <div
