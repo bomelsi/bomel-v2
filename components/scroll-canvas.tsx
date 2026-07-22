@@ -70,14 +70,22 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       }
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Contain-fit siempre: la casa se ve completa. Los bordes que quedan
-      // sin cubrir (laterales en pantallas anchas, superior/inferior en
-      // verticales) se desvanecen hacia el fondo oscuro de la tarjeta.
-      const scale = Math.min(cssWidth / img.width, cssHeight / img.height);
+      // Contain-fit como base: la casa siempre se ve completa. En
+      // contenedores anchos (desktop) se aplica un acercamiento moderado
+      // que agranda la casa recortando solo cielo (arriba) y calle (abajo),
+      // sin pasar nunca de cover. Los bordes sin cubrir se desvanecen.
+      const containScale = Math.min(cssWidth / img.width, cssHeight / img.height);
+      const coverScale = Math.max(cssWidth / img.width, cssHeight / img.height);
+      const zoom = cssWidth > cssHeight ? 1.25 : 1;
+      const scale = Math.min(containScale * zoom, coverScale);
       const drawWidth = img.width * scale;
       const drawHeight = img.height * scale;
       const dx = (cssWidth - drawWidth) / 2;
-      const dy = (cssHeight - drawHeight) / 2;
+      // Si hay recorte vertical, se lo lleva más el cielo que la calle (60/40)
+      const dy =
+        drawHeight > cssHeight
+          ? -(drawHeight - cssHeight) * 0.6
+          : (cssHeight - drawHeight) / 2;
       ctx.clearRect(0, 0, cssWidth, cssHeight);
       ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
 

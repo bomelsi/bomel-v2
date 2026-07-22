@@ -35,6 +35,10 @@ html {
   /* clip (no hidden): bloquea el paneo lateral en móvil sin crear un
      scroll container que rompería los elementos sticky */
   overflow-x: clip;
+  /* Evita el rebote elástico (rubber-band) en los extremos de la página
+     en móvil, que dispara parpadeos de la barra de direcciones durante
+     el scroll largo del hero. */
+  overscroll-behavior-y: contain;
 }
 
 /* El cursor personalizado reemplaza al nativo (solo puntero fino) */
@@ -48,6 +52,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: clip;
+  overscroll-behavior-y: contain;
 }
 
 ::selection {

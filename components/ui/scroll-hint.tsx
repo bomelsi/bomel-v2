@@ -35,7 +35,7 @@ export function ScrollHint({ label = "Desliza para construir" }: ScrollHintProps
       onClick={handleClick}
       aria-label={label}
       className={cn(
-        "scroll-hint absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground transition-opacity duration-500 md:bottom-6",
+        "scroll-hint absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-muted-foreground transition-opacity duration-500 md:bottom-6",
         visible ? "opacity-100" : "opacity-0 pointer-events-none"
       )}
     >
