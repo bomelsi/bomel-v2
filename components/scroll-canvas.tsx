@@ -36,32 +36,57 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
     const loadedRef = useRef<boolean[]>([]);
     const frameIndexRef = useRef(0);
     const rafRef = useRef(0);
+    // Indirección para poder reintentar desde renderFrame, que se define
+    // antes que scheduleRender.
+    const scheduleRenderRef = useRef<(() => void) | null>(null);
     const [loadedCount, setLoadedCount] = useState(0);
     const ready = loadedCount >= frameCount;
 
-    // Si el frame exacto aún no cargó, usa el más cercano disponible
-    // para que el scrub nunca muestre un canvas vacío.
-    const nearestLoaded = useCallback((index: number) => {
-      if (loadedRef.current[index]) return index;
-      for (let offset = 1; offset < loadedRef.current.length; offset++) {
-        if (loadedRef.current[index - offset]) return index - offset;
-        if (loadedRef.current[index + offset]) return index + offset;
-      }
-      return -1;
+    // Un frame solo sirve si además de haber cargado sigue siendo dibujable:
+    // bajo presión de memoria el navegador móvil puede descartar el bitmap
+    // decodificado, y entonces drawImage no pinta nada (fotograma en negro).
+    const isDrawable = useCallback((index: number) => {
+      if (!loadedRef.current[index]) return false;
+      const img = imagesRef.current[index];
+      return !!img && img.complete && img.naturalWidth > 0;
     }, []);
+
+    // Si el frame exacto no está disponible, usa el más cercano que sí lo esté
+    // para que el scrub nunca muestre un canvas vacío.
+    const nearestLoaded = useCallback(
+      (index: number) => {
+        if (isDrawable(index)) return index;
+        for (let offset = 1; offset < loadedRef.current.length; offset++) {
+          if (isDrawable(index - offset)) return index - offset;
+          if (isDrawable(index + offset)) return index + offset;
+        }
+        return -1;
+      },
+      [isDrawable]
+    );
 
     const renderFrame = useCallback(() => {
       const canvas = canvasRef.current;
       const ctx = canvas?.getContext("2d");
       if (!canvas || !ctx) return;
 
+      // Nada dibujable: conserva lo que ya hubiera pintado. Nunca se limpia
+      // el lienzo "por si acaso", porque eso es justo lo que deja el hueco
+      // negro cuando el frame de destino no está disponible.
       const index = nearestLoaded(frameIndexRef.current);
       if (index < 0) return;
       const img = imagesRef.current[index];
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 3);
       const cssWidth = canvas.clientWidth;
       const cssHeight = canvas.clientHeight;
+      // Sin layout todavía: asignar canvas.width = 0 lo dejaría en negro.
+      if (cssWidth <= 0 || cssHeight <= 0) return;
+
+      // En móvil la secuencia se sirve a 900px de ancho (mismo criterio que
+      // frameSrc en hero.tsx), así que pasar de dpr 2 solo escalaría hacia
+      // arriba: más memoria de canvas sin ganar nitidez.
+      const maxDpr = window.innerWidth < 768 ? 2 : 3;
+      const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
       const bitmapWidth = Math.round(cssWidth * dpr);
       const bitmapHeight = Math.round(cssHeight * dpr);
       if (canvas.width !== bitmapWidth || canvas.height !== bitmapHeight) {
@@ -86,8 +111,22 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
         drawHeight > cssHeight
           ? -(drawHeight - cssHeight) * 0.6
           : (cssHeight - drawHeight) / 2;
-      ctx.clearRect(0, 0, cssWidth, cssHeight);
-      ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+
+      // Última verificación antes de borrar: con medidas no finitas drawImage
+      // no pinta nada y el lienzo se quedaría limpio, es decir, negro.
+      if (!Number.isFinite(drawWidth) || !Number.isFinite(drawHeight)) return;
+
+      try {
+        ctx.clearRect(0, 0, cssWidth, cssHeight);
+        ctx.drawImage(img, dx, dy, drawWidth, drawHeight);
+      } catch {
+        // Imagen en estado inválido (descartada por el navegador): se marca
+        // como no cargada para que el siguiente render tire del vecino más
+        // cercano, y se reintenta enseguida en vez de dejar el hueco negro.
+        loadedRef.current[index] = false;
+        scheduleRenderRef.current?.();
+        return;
+      }
 
       ctx.globalCompositeOperation = "destination-out";
       if (drawHeight < cssHeight - 1) {
@@ -136,6 +175,8 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       rafRef.current = requestAnimationFrame(renderFrame);
     }, [renderFrame]);
 
+    scheduleRenderRef.current = scheduleRender;
+
     useImperativeHandle(
       ref,
       () => ({
@@ -169,6 +210,14 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
           if (i === frameIndexRef.current || nearestLoaded(frameIndexRef.current) === i) {
             scheduleRender();
           }
+        };
+        // Un frame que falla se cuenta igual para el progreso: si no, el
+        // indicador de carga se quedaría clavado para siempre. Queda marcado
+        // como no cargado, así que nearestLoaded tirará de su vecino.
+        img.onerror = () => {
+          if (cancelled) return;
+          loadedRef.current[i] = false;
+          setLoadedCount((count) => count + 1);
         };
         img.src = frameSrc(i);
         return img;
