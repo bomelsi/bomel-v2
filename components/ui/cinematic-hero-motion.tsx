@@ -4,12 +4,13 @@ import { useEffect, useRef, type RefObject } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type { ScrollCanvasHandle } from "@/components/scroll-canvas";
+import { getScrollRoot, getScrollTop } from "@/lib/scroll-root";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
-  // La barra de direcciones del navegador móvil dispara un resize al
-  // aparecer/ocultarse durante el scroll; sin esto, ScrollTrigger
-  // recalcula start/end en ese instante y el scrub salta de frame.
+  // Red de seguridad: con el scroll en #scroll-root la barra de direcciones
+  // ya no se retrae y el viewport no cambia de alto a mitad del scroll, pero
+  // el teclado virtual y la rotación siguen disparando resize.
   ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
@@ -43,7 +44,7 @@ export function CinematicHeroMotion({
   // Luz dinámica de la tarjeta siguiendo el mouse (rAF para rendimiento)
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (window.scrollY > window.innerHeight * 6) return;
+      if (getScrollTop() > window.innerHeight * 6) return;
 
       cancelAnimationFrame(requestRef.current);
       requestRef.current = requestAnimationFrame(() => {
@@ -72,9 +73,14 @@ export function CinematicHeroMotion({
   // El único efecto ligado al scroll es la construcción de la casa
   // frame a frame dentro de la tarjeta (canvas).
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const create = () => {
       const trigger = ScrollTrigger.create({
         trigger: containerRef.current,
+        // En móvil el scroll lo hace #scroll-root; en desktop, el documento
+        // (getScrollRoot() devuelve null y ScrollTrigger usa su default).
+        // Se pasa el elemento y no un selector porque gsap resolvería la
+        // cadena dentro del scope, y #scroll-root es un ancestro del hero.
+        scroller: getScrollRoot() ?? undefined,
         start: "top top",
         end: "bottom bottom",
         onUpdate: (self) => {
@@ -85,9 +91,15 @@ export function CinematicHeroMotion({
       });
 
       return () => trigger.kill();
-    }, containerRef);
+    };
 
-    return () => ctx.revert();
+    // matchMedia recrea el trigger al cruzar el breakpoint, que es justo
+    // cuando cambia cuál es el elemento que scrollea.
+    const mm = gsap.matchMedia();
+    mm.add("(max-width: 767px)", create);
+    mm.add("(min-width: 768px)", create);
+
+    return () => mm.revert();
   }, [containerRef, canvasApiRef]);
 
   return null;

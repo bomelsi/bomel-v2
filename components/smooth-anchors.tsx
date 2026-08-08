@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { scrollPageTo } from "@/lib/scroll-root";
 
 /**
  * Desplazamiento suave para enlaces de ancla, hecho por JS en el clic.
@@ -35,7 +36,7 @@ export function SmoothAnchors() {
         target.scrollIntoView({ behavior });
       } else {
         history.pushState(null, "", window.location.pathname);
-        window.scrollTo({ top: 0, behavior });
+        scrollPageTo({ top: 0, behavior });
       }
     };
 

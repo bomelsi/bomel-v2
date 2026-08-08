@@ -32,12 +32,10 @@ html {
   /* Sin scroll-behavior: smooth — anima los ajustes internos de
      ScrollTrigger y provoca tirones; el desplazamiento suave de los
      anclas lo hace <SmoothAnchors /> por JS solo al hacer clic. */
-  /* clip (no hidden): bloquea el paneo lateral en móvil sin crear un
-     scroll container que rompería los elementos sticky */
+  /* clip (no hidden): bloquea el paneo lateral sin crear un scroll
+     container que rompería los elementos sticky */
   overflow-x: clip;
-  /* Evita el rebote elástico (rubber-band) en los extremos de la página
-     en móvil, que dispara parpadeos de la barra de direcciones durante
-     el scroll largo del hero. */
+  /* Evita el rebote elástico (rubber-band) en los extremos de la página. */
   overscroll-behavior-y: contain;
 }
 
@@ -53,6 +51,39 @@ body {
   font-family: var(--font-sans);
   overflow-x: clip;
   overscroll-behavior-y: contain;
+}
+
+/* Desktop: sin caja propia. El documento scrollea como siempre y el layout
+   (body flex-col + main flex-1 + footer) queda exactamente igual que antes. */
+#scroll-root {
+  display: contents;
+}
+
+/* Solo móvil: el scroll de la página pasa a #scroll-root en vez del
+   documento. Chrome y Safari móvil solo colapsan/expanden su barra de
+   direcciones cuando quien scrollea es el documento; dentro de un
+   contenedor anidado la barra queda congelada y el viewport ya no cambia
+   de alto a mitad del scroll — que era lo que rompía el hero.
+   Va después de las reglas de html/body para poder sobrescribir su overflow.
+   Ver lib/scroll-root.ts (el breakpoint debe coincidir). */
+@media (max-width: 767px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #scroll-root {
+    display: flex;
+    flex-direction: column;
+    /* svh = viewport con la barra del navegador desplegada. Como la barra
+       ya nunca se retrae, esa es exactamente el área visible. */
+    height: 100svh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 ::selection {

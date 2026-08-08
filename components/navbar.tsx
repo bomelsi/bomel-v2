@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { subscribeScroll } from "@/lib/scroll-root";
 import { CONTACTO_LINK, NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
 import { SERVICIOS_DATA } from "@/lib/data/servicios";
 
@@ -19,12 +20,7 @@ export function Navbar() {
   const [serviciosOpen, setServiciosOpen] = useState(false);
   const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(() => subscribeScroll((top) => setScrolled(top > 40)), []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100]">

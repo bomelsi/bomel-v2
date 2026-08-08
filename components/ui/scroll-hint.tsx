@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { scrollPageBy, subscribeScroll } from "@/lib/scroll-root";
 import { cn } from "@/lib/utils";
 
 interface ScrollHintProps {
@@ -18,15 +19,10 @@ interface ScrollHintProps {
 export function ScrollHint({ label = "Desliza para construir" }: ScrollHintProps) {
   const [visible, setVisible] = useState(true);
 
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY < 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(() => subscribeScroll((top) => setVisible(top < 40)), []);
 
   const handleClick = () => {
-    window.scrollBy({ top: window.innerHeight * 0.8, behavior: "smooth" });
+    scrollPageBy({ top: window.innerHeight * 0.8, behavior: "smooth" });
   };
 
   return (

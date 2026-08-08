@@ -4,6 +4,8 @@ import { CustomCursor } from "@/components/custom-cursor";
 import { SmoothAnchors } from "@/components/smooth-anchors";
 import { StructuredData } from "@/components/structured-data";
 import { MobileStickyBar } from "@/components/mobile-sticky-bar";
+import { ScrollRootReset } from "@/components/scroll-root-reset";
+import { SCROLL_ROOT_ID } from "@/lib/scroll-root";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -76,7 +78,12 @@ export default function RootLayout({
         <StructuredData />
         <CustomCursor />
         <SmoothAnchors />
-        {children}
+        <ScrollRootReset />
+        {/* Contenedor de scroll solo en móvil: mantiene congelada la barra
+            del navegador (ver lib/scroll-root.ts). En desktop es
+            `display: contents`, así que no altera el layout de antes.
+            Los elementos fijos (cursor, barra inferior) viven fuera. */}
+        <div id={SCROLL_ROOT_ID}>{children}</div>
         <MobileStickyBar />
       </body>
     </html>
