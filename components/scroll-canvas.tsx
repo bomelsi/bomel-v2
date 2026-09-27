@@ -6,7 +6,6 @@ import React, {
   useEffect,
   useImperativeHandle,
   useRef,
-  useState,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -20,17 +19,38 @@ interface ScrollCanvasProps {
   /** Devuelve la URL del frame para un índice base-0. */
   frameSrc: (index: number) => string;
   className?: string;
+  /**
+   * Progreso (0 a 1) de la primera pasada de carga. Al llegar a 1 la
+   * secuencia ya recorre la obra completa y el scroll puede empezar.
+   */
+  onLoadProgress?: (progress: number) => void;
+}
+
+// Primera pasada: un frame de cada COARSE_STEP, repartidos por toda la obra
+// (más el último). Con esos ~31 frames la casa ya se construye de principio
+// a fin; el resto se rellena después sin que se note, gracias a nearestLoaded.
+const COARSE_STEP = 4;
+
+function splitLoadOrder(count: number) {
+  const coarse: number[] = [];
+  for (let i = 0; i < count; i += COARSE_STEP) coarse.push(i);
+  if (coarse[coarse.length - 1] !== count - 1) coarse.push(count - 1);
+  const inCoarse = new Set(coarse);
+  const fine: number[] = [];
+  for (let i = 0; i < count; i++) if (!inCoarse.has(i)) fine.push(i);
+  return { coarse, fine };
 }
 
 /**
  * Secuencia de imágenes controlada por scroll, estilo Apple.
- * - Pre-carga todos los frames con objetos Image y muestra un indicador de carga.
+ * - Pre-carga los frames en dos pasadas (ver splitLoadOrder) e informa el
+ *   progreso de la primera a quien lo pida (la pantalla de entrada del home).
  * - Dibuja con ctx.drawImage (cover-fit en horizontal, contain-fit con
  *   bordes desvanecidos en vertical) dentro de requestAnimationFrame.
  * - Multiplica la resolución interna por devicePixelRatio para nitidez HiDPI/Retina.
  */
 export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
-  function ScrollCanvas({ frameCount, frameSrc, className }, ref) {
+  function ScrollCanvas({ frameCount, frameSrc, className, onLoadProgress }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const imagesRef = useRef<HTMLImageElement[]>([]);
     const loadedRef = useRef<boolean[]>([]);
@@ -39,8 +59,10 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
     // Indirección para poder reintentar desde renderFrame, que se define
     // antes que scheduleRender.
     const scheduleRenderRef = useRef<(() => void) | null>(null);
-    const [loadedCount, setLoadedCount] = useState(0);
-    const ready = loadedCount >= frameCount;
+    const onLoadProgressRef = useRef(onLoadProgress);
+    useEffect(() => {
+      onLoadProgressRef.current = onLoadProgress;
+    }, [onLoadProgress]);
 
     // Un frame solo sirve si además de haber cargado sigue siendo dibujable:
     // bajo presión de memoria el navegador móvil puede descartar el bitmap
@@ -195,33 +217,49 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       [frameCount, scheduleRender]
     );
 
-    // Pre-carga de toda la secuencia antes de iniciar.
+    // Pre-carga en dos pasadas: primero los frames repartidos por toda la
+    // obra (la secuencia ya se puede recorrer completa) y, cuando terminan,
+    // los intermedios. Si se pidieran los 121 a la vez, los de la primera
+    // pasada competirían con el resto y el scroll tardaría mucho más.
     useEffect(() => {
       let cancelled = false;
       loadedRef.current = new Array(frameCount).fill(false);
-      imagesRef.current = Array.from({ length: frameCount }, (_, i) => {
+      imagesRef.current = new Array(frameCount);
+      const { coarse, fine } = splitLoadOrder(frameCount);
+
+      const load = (i: number, onSettled?: () => void) => {
         const img = new Image();
         img.decoding = "async";
         img.onload = () => {
           if (cancelled) return;
           loadedRef.current[i] = true;
-          setLoadedCount((count) => count + 1);
-          // Pinta el primer frame disponible apenas exista.
+          // Pinta el primer frame disponible apenas exista, y mejora el
+          // actual si el que llega está más cerca del que toca.
           if (i === frameIndexRef.current || nearestLoaded(frameIndexRef.current) === i) {
             scheduleRender();
           }
+          onSettled?.();
         };
-        // Un frame que falla se cuenta igual para el progreso: si no, el
-        // indicador de carga se quedaría clavado para siempre. Queda marcado
-        // como no cargado, así que nearestLoaded tirará de su vecino.
+        // Un frame que falla cuenta igual como resuelto: si no, el progreso
+        // se quedaría clavado. Queda como no cargado y nearestLoaded tira
+        // de su vecino.
         img.onerror = () => {
           if (cancelled) return;
           loadedRef.current[i] = false;
-          setLoadedCount((count) => count + 1);
+          onSettled?.();
         };
         img.src = frameSrc(i);
-        return img;
-      });
+        imagesRef.current[i] = img;
+      };
+
+      let coarseSettled = 0;
+      coarse.forEach((i) =>
+        load(i, () => {
+          coarseSettled += 1;
+          onLoadProgressRef.current?.(coarseSettled / coarse.length);
+          if (coarseSettled === coarse.length) fine.forEach((j) => load(j));
+        })
+      );
 
       return () => {
         cancelled = true;
@@ -246,19 +284,6 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
           role="img"
           aria-label="Secuencia de construcción: una casa pasa de obra gris a obra terminada"
         />
-        {!ready && (
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <div className="glass-panel flex items-center gap-3 rounded-full px-5 py-2.5">
-              <span
-                className="h-2 w-2 animate-pulse rounded-full bg-brand-bright"
-                aria-hidden="true"
-              />
-              <span className="text-xs font-semibold tracking-widest text-foreground/80 uppercase">
-                Cargando obra… {Math.round((loadedCount / frameCount) * 100)}%
-              </span>
-            </div>
-          </div>
-        )}
       </div>
     );
   }

@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import { ScrollCanvas, type ScrollCanvasHandle } from "@/components/scroll-canvas";
+import { IntroSplash, type IntroSplashHandle } from "@/components/intro-splash";
 import { ScrollHint } from "@/components/ui/scroll-hint";
 
 // GSAP + ScrollTrigger solo se cargan en el cliente, en su propio chunk,
@@ -161,6 +162,7 @@ export function Hero({
   const containerRef = useRef<HTMLDivElement>(null);
   const mainCardRef = useRef<HTMLDivElement>(null);
   const canvasApiRef = useRef<ScrollCanvasHandle>(null);
+  const splashRef = useRef<IntroSplashHandle>(null);
 
   return (
     <div
@@ -169,6 +171,10 @@ export function Hero({
       {...props}
     >
       <style dangerouslySetInnerHTML={{ __html: INJECTED_STYLES }} />
+      {/* Entrada con el logo mientras carga la primera pasada de la secuencia.
+          Va fuera del escenario sticky: su perspective convertiría el fixed
+          en relativo a él en vez de a la pantalla. */}
+      <IntroSplash ref={splashRef} />
       <CinematicHeroMotion
         containerRef={containerRef}
         mainCardRef={mainCardRef}
@@ -222,6 +228,7 @@ export function Hero({
                   ref={canvasApiRef}
                   frameCount={FRAME_COUNT}
                   frameSrc={frameSrc}
+                  onLoadProgress={(p) => splashRef.current?.setProgress(p)}
                 />
                 <div className="canvas-veil absolute inset-0 pointer-events-none" aria-hidden="true" />
               </div>
