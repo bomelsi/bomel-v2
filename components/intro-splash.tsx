@@ -14,9 +14,14 @@ export interface IntroSplashHandle {
   setProgress: (progress: number) => void;
 }
 
+// Tiempo mínimo en pantalla: aunque la carga termine antes, la entrada se
+// queda para que el logo se llegue a apreciar. La línea avanza pareja durante
+// ese tiempo en vez de saltar al final de golpe.
+const MIN_SHOW_MS = 3200;
 // Tope de espera: con conexión lenta la entrada se retira igual y el resto
 // de frames sigue cargando por detrás (ScrollCanvas muestra el más cercano).
-const MAX_WAIT_MS = 4000;
+const MAX_WAIT_MS = 9000;
+const TICK_MS = 100;
 // Pausa para que la línea llegue visiblemente al final antes del fundido.
 const FILL_SETTLE_MS = 350;
 const FADE_OUT_MS = 600;
@@ -38,12 +43,12 @@ const STYLES = `
     }
   }
   .intro-splash {
-    animation: intro-in .5s ease .4s both, intro-safety .5s ease 9s forwards;
+    animation: intro-in .5s ease .4s both, intro-safety .5s ease 12s forwards;
   }
   .intro-logo { animation: intro-glow 2.2s ease-in-out infinite; }
   .intro-fill { box-shadow: 0 0 10px rgba(45,212,191,.7); }
   @media (prefers-reduced-motion: reduce) {
-    .intro-splash { animation: intro-in .2s ease .4s both, intro-safety .2s ease 9s forwards; }
+    .intro-splash { animation: intro-in .2s ease .4s both, intro-safety .2s ease 12s forwards; }
     .intro-logo { animation: none; filter: drop-shadow(0 0 14px rgba(45,212,191,.55)); }
   }
 `;
@@ -60,6 +65,7 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
   const rootRef = useRef<HTMLDivElement>(null);
   const fillRef = useRef<HTMLDivElement>(null);
   const leavingRef = useRef(false);
+  const progressRef = useRef(0);
   const timersRef = useRef<number[]>([]);
   const [done, setDone] = useState(false);
 
@@ -95,15 +101,34 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
   useImperativeHandle(ref, () => ({
     setProgress(progress: number) {
       if (leavingRef.current) return;
-      const p = Math.min(1, Math.max(0, progress));
-      if (fillRef.current) fillRef.current.style.width = `${p * 100}%`;
-      if (p >= 1) leave();
+      progressRef.current = Math.min(1, Math.max(0, progress));
+      // Todo listo antes de que la entrada llegara a verse (fotos en caché):
+      // se quita en el acto, sin hacer esperar a quien ya visitó la página.
+      const root = rootRef.current;
+      if (
+        progressRef.current >= 1 &&
+        root &&
+        Number(getComputedStyle(root).opacity) < 0.05
+      ) {
+        leave();
+      }
     },
   }));
 
   useEffect(() => {
     const timers = timersRef.current;
+    const start = performance.now();
     timers.push(window.setTimeout(leave, MAX_WAIT_MS));
+
+    // La línea muestra el menor entre el progreso real y el tiempo mínimo
+    // transcurrido, y la entrada se retira cuando se cumplen ambos.
+    const tick = window.setInterval(() => {
+      if (leavingRef.current) return window.clearInterval(tick);
+      const byTime = (performance.now() - start) / MIN_SHOW_MS;
+      const shown = Math.min(progressRef.current, byTime);
+      if (fillRef.current) fillRef.current.style.width = `${shown * 100}%`;
+      if (progressRef.current >= 1 && byTime >= 1) leave();
+    }, TICK_MS);
 
     // Mientras la entrada cubre la pantalla, el scroll no debe avanzar el
     // hero por debajo sin que se vea. En táctil lo frena touch-action.
@@ -113,6 +138,7 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
 
     return () => {
       root?.removeEventListener("wheel", block);
+      window.clearInterval(tick);
       timers.forEach(clearTimeout);
     };
   }, []);

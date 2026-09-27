@@ -20,31 +20,16 @@ interface ScrollCanvasProps {
   frameSrc: (index: number) => string;
   className?: string;
   /**
-   * Progreso (0 a 1) de la primera pasada de carga. Al llegar a 1 la
-   * secuencia ya recorre la obra completa y el scroll puede empezar.
+   * Progreso (0 a 1) de la carga de la secuencia. Al llegar a 1 están los
+   * 121 frames y el scroll se ve completamente fluido.
    */
   onLoadProgress?: (progress: number) => void;
 }
 
-// Primera pasada: un frame de cada COARSE_STEP, repartidos por toda la obra
-// (más el último). Con esos ~31 frames la casa ya se construye de principio
-// a fin; el resto se rellena después sin que se note, gracias a nearestLoaded.
-const COARSE_STEP = 4;
-
-function splitLoadOrder(count: number) {
-  const coarse: number[] = [];
-  for (let i = 0; i < count; i += COARSE_STEP) coarse.push(i);
-  if (coarse[coarse.length - 1] !== count - 1) coarse.push(count - 1);
-  const inCoarse = new Set(coarse);
-  const fine: number[] = [];
-  for (let i = 0; i < count; i++) if (!inCoarse.has(i)) fine.push(i);
-  return { coarse, fine };
-}
-
 /**
  * Secuencia de imágenes controlada por scroll, estilo Apple.
- * - Pre-carga los frames en dos pasadas (ver splitLoadOrder) e informa el
- *   progreso de la primera a quien lo pida (la pantalla de entrada del home).
+ * - Pre-carga todos los frames en orden e informa el progreso a quien lo
+ *   pida (la pantalla de entrada del home).
  * - Dibuja con ctx.drawImage (cover-fit en horizontal, contain-fit con
  *   bordes desvanecidos en vertical) dentro de requestAnimationFrame.
  * - Multiplica la resolución interna por devicePixelRatio para nitidez HiDPI/Retina.
@@ -217,17 +202,20 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       [frameCount, scheduleRender]
     );
 
-    // Pre-carga en dos pasadas: primero los frames repartidos por toda la
-    // obra (la secuencia ya se puede recorrer completa) y, cuando terminan,
-    // los intermedios. Si se pidieran los 121 a la vez, los de la primera
-    // pasada competirían con el resto y el scroll tardaría mucho más.
+    // Pre-carga de toda la secuencia, en orden. Se cargan los 121 frames
+    // antes de retirar la entrada para que el scroll sea fluido desde el
+    // primer gesto (una carga parcial se notaba a saltos).
     useEffect(() => {
       let cancelled = false;
       loadedRef.current = new Array(frameCount).fill(false);
       imagesRef.current = new Array(frameCount);
-      const { coarse, fine } = splitLoadOrder(frameCount);
+      let settled = 0;
+      const onSettled = () => {
+        settled += 1;
+        onLoadProgressRef.current?.(settled / frameCount);
+      };
 
-      const load = (i: number, onSettled?: () => void) => {
+      const load = (i: number) => {
         const img = new Image();
         img.decoding = "async";
         img.onload = () => {
@@ -238,7 +226,7 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
           if (i === frameIndexRef.current || nearestLoaded(frameIndexRef.current) === i) {
             scheduleRender();
           }
-          onSettled?.();
+          onSettled();
         };
         // Un frame que falla cuenta igual como resuelto: si no, el progreso
         // se quedaría clavado. Queda como no cargado y nearestLoaded tira
@@ -246,20 +234,13 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
         img.onerror = () => {
           if (cancelled) return;
           loadedRef.current[i] = false;
-          onSettled?.();
+          onSettled();
         };
         img.src = frameSrc(i);
         imagesRef.current[i] = img;
       };
 
-      let coarseSettled = 0;
-      coarse.forEach((i) =>
-        load(i, () => {
-          coarseSettled += 1;
-          onLoadProgressRef.current?.(coarseSettled / coarse.length);
-          if (coarseSettled === coarse.length) fine.forEach((j) => load(j));
-        })
-      );
+      for (let i = 0; i < frameCount; i++) load(i);
 
       return () => {
         cancelled = true;
