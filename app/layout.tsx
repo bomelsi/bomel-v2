@@ -6,6 +6,7 @@ import { StructuredData } from "@/components/structured-data";
 import { MobileStickyBar } from "@/components/mobile-sticky-bar";
 import { ScrollRootReset } from "@/components/scroll-root-reset";
 import { SCROLL_ROOT_ID } from "@/lib/scroll-root";
+import { INTRO_BOOT_SCRIPT } from "@/lib/intro";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -73,7 +74,15 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${poppins.variable} ${openSans.variable} h-full antialiased`}
+      // El script de abajo añade una clase a <html> antes de hidratar.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Se ejecuta antes del primer pintado: decide si el home abre con la
+            entrada (components/intro-splash.tsx) para que la página no se
+            alcance a ver detrás ni un instante. */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <StructuredData />
         <CustomCursor />

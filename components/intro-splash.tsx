@@ -9,6 +9,11 @@ import React, {
 } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import {
+  INTRO_PENDING_CLASS,
+  INTRO_SEEN_CLASS,
+  INTRO_STORAGE_KEY,
+} from "@/lib/intro";
 
 export interface IntroSplashHandle {
   /** Progreso de la carga de la secuencia del hero, de 0 a 1. */
@@ -41,10 +46,12 @@ const FADE_OUT_MS = 600;
 
 type Phase = "typing" | "stamp" | "impact";
 
+// Ya se mostró en esta carga de la app: al volver al home navegando dentro
+// del sitio no se repite. Arranca en false en cada carga completa, así el
+// primer render coincide con el HTML del servidor.
+let playedThisSession = false;
+
 const STYLES = `
-  /* Aparece con retraso: si la secuencia ya está en caché (visita repetida),
-     la entrada se retira antes de llegar a verse. */
-  @keyframes intro-in { from { opacity: 0; } to { opacity: 1; } }
   /* Red de seguridad sin JavaScript: se retira sola pasados unos segundos. */
   @keyframes intro-safety { to { opacity: 0; visibility: hidden; } }
   @keyframes intro-glow {
@@ -85,7 +92,8 @@ const STYLES = `
   }
   @keyframes intro-fade { to { opacity: 1; } }
 
-  .intro-splash { animation: intro-in .5s ease .4s both, intro-safety .5s ease 12s forwards; }
+  /* Opaca desde el primer pintado: la página no se alcanza a ver detrás. */
+  .intro-splash { animation: intro-safety .5s ease 12s forwards; }
   .intro-logo { animation: intro-glow 2.2s ease-in-out infinite; }
   .intro-logo.is-hit {
     animation: intro-logo-flash .9s ease-out, intro-glow 2.2s ease-in-out .9s infinite;
@@ -120,7 +128,6 @@ const STYLES = `
 
   /* Reducir movimiento: sin escritura, sin caída, onda ni temblor. */
   @media (prefers-reduced-motion: reduce) {
-    .intro-splash { animation: intro-in .2s ease .4s both, intro-safety .2s ease 12s forwards; }
     .intro-logo, .intro-logo.is-hit {
       animation: none; filter: drop-shadow(0 0 14px rgba(45,212,191,.55));
     }
@@ -148,7 +155,7 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
   const leavingRef = useRef(false);
   const progressRef = useRef(0);
   const timersRef = useRef<number[]>([]);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(() => playedThisSession);
   const [typed, setTyped] = useState(0);
   const [phase, setPhase] = useState<Phase>("typing");
 
@@ -157,12 +164,6 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
     leavingRef.current = true;
     const root = rootRef.current;
     if (!root) return;
-
-    // Todavía invisible (carga desde caché): se quita sin más, sin parpadeo.
-    if (Number(getComputedStyle(root).opacity) < 0.05) {
-      setDone(true);
-      return;
-    }
 
     if (fillRef.current) fillRef.current.style.width = "100%";
     timersRef.current.push(
@@ -174,6 +175,9 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
         void root.offsetWidth;
         root.style.transition = `opacity ${FADE_OUT_MS}ms ease`;
         root.style.opacity = "0";
+        // El velo de fondo se quita a la vez: detrás del fundido ya debe
+        // verse el hero, no negro.
+        document.documentElement.classList.remove(INTRO_PENDING_CLASS);
         timersRef.current.push(
           window.setTimeout(() => setDone(true), FADE_OUT_MS)
         );
@@ -185,20 +189,23 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
     setProgress(progress: number) {
       if (leavingRef.current) return;
       progressRef.current = Math.min(1, Math.max(0, progress));
-      // Todo listo antes de que la entrada llegara a verse (fotos en caché):
-      // se quita en el acto, sin hacer esperar a quien ya visitó la página.
-      const root = rootRef.current;
-      if (
-        progressRef.current >= 1 &&
-        root &&
-        Number(getComputedStyle(root).opacity) < 0.05
-      ) {
-        leave();
-      }
     },
   }));
 
   useEffect(() => {
+    const html = document.documentElement;
+    // Ya vista en esta sesión: el CSS la oculta desde antes de pintar.
+    if (html.classList.contains(INTRO_SEEN_CLASS)) {
+      playedThisSession = true;
+      return;
+    }
+    playedThisSession = true;
+    try {
+      sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
+    } catch {
+      // Almacenamiento bloqueado: la entrada se verá en cada carga.
+    }
+
     const timers = timersRef.current;
     const at = (ms: number, fn: () => void) =>
       timers.push(window.setTimeout(fn, ms));
@@ -243,6 +250,8 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
       root?.removeEventListener("wheel", block);
       window.clearInterval(tick);
       timers.forEach(clearTimeout);
+      // Si se sale del home a mitad de la entrada, el velo no debe quedarse.
+      html.classList.remove(INTRO_PENDING_CLASS);
     };
   }, []);
 

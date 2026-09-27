@@ -86,6 +86,31 @@ body {
   }
 }
 
+/* Entrada del home (components/intro-splash.tsx, lib/intro.ts).
+   intro-pending: un velo del color de fondo tapa la página desde el primer
+   pintado hasta que la entrada se retira, para que no se vea nada detrás.
+   Si JavaScript fallara, el velo se retira solo a los 12 s.
+   intro-seen: ya se vio en esta sesión, no se muestra. */
+html.intro-pending body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: var(--background);
+  animation: intro-cover-safety 0.5s ease 12s forwards;
+}
+
+@keyframes intro-cover-safety {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+html.intro-seen .intro-splash {
+  display: none;
+}
+
 ::selection {
   background: var(--brand-strong);
   color: #ffffff;
