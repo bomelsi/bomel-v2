@@ -4,7 +4,6 @@ import { Navbar } from "@/components/navbar";
 import { ClientesBanner } from "@/components/sections/clientes";
 import { Cotizador } from "@/components/cotizador";
 import { Nosotros } from "@/components/sections/nosotros";
-import { Testimonios } from "@/components/sections/testimonios";
 import { Servicios } from "@/components/sections/servicios";
 import { Ventanas } from "@/components/sections/ventanas";
 import { BlogPreview } from "@/components/sections/blog-preview";
@@ -17,7 +16,7 @@ export default function Home() {
       <Navbar />
       {/* Orden: primero qué hacemos (servicios y línea de ventanería) y cómo
           pedir precio, porque es lo que viene a buscar quien entra; después
-          quiénes somos y las pruebas (obras, clientes, testimonios). */}
+          quiénes somos y las pruebas: obras y clientes reales. */}
       <main className="flex-1">
         <Hero />
         <Servicios />
@@ -28,7 +27,6 @@ export default function Home() {
         <MagneticCta />
         <Nosotros />
         <ClientesBanner />
-        <Testimonios />
         <BlogPreview />
         <FaqHome />
       </main>
