@@ -178,7 +178,7 @@ export default async function BlogPostPage({ params }: Props) {
               ¿Listo para tu proyecto?
             </p>
             <p className="text-sm text-muted-foreground mb-5">
-              Cuéntanos qué necesitas. Te respondemos con tu cotización en menos de 24 horas hábiles.
+              Cuéntanos qué necesitas. Te preparamos una cotización profesional, detallada y a la medida de tu proyecto.
             </p>
             <Link
               href="/contacto"

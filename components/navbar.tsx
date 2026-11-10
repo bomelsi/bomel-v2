@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { subscribeScroll } from "@/lib/scroll-root";
@@ -19,6 +20,10 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [serviciosOpen, setServiciosOpen] = useState(false);
   const [mobileServiciosOpen, setMobileServiciosOpen] = useState(false);
+  // Las anclas del menú (#nosotros) solo existen en el inicio: desde
+  // cualquier otra página hay que ir primero al home.
+  const pathname = usePathname();
+  const anchorHref = (href: string) => (pathname === "/" ? href : `/${href}`);
 
   useEffect(() => subscribeScroll((top) => setScrolled(top > 40)), []);
 
@@ -50,7 +55,7 @@ export function Navbar() {
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
-                href={link.href}
+                href={anchorHref(link.href)}
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-bright"
               >
                 {link.label}
@@ -146,7 +151,7 @@ export function Navbar() {
             rel="noopener noreferrer"
             className="hidden rounded-full bg-gradient-to-b from-brand-bright to-brand-strong px-5 py-2.5 text-sm font-bold text-[#04211d] shadow-[0_8px_24px_-8px_rgba(45,212,191,0.6),inset_0_1px_1px_rgba(255,255,255,0.4)] transition-transform hover:-translate-y-0.5 md:inline-flex"
           >
-            Recibe tu cotización en 24h
+            Solicita tu cotización
           </a>
 
           <button
@@ -188,7 +193,7 @@ export function Navbar() {
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={anchorHref(link.href)}
                     onClick={() => setMenuOpen(false)}
                     className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
                   >
@@ -278,7 +283,7 @@ export function Navbar() {
                   rel="noopener noreferrer"
                   className="block rounded-xl bg-gradient-to-b from-brand-bright to-brand-strong px-4 py-3 text-center font-bold text-[#04211d]"
                 >
-                  Recibe tu cotización en 24h
+                  Solicita tu cotización
                 </a>
               </li>
             </ul>

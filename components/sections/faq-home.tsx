@@ -6,7 +6,7 @@ const FAQS = [
   {
     pregunta: "¿Atienden proyectos pequeños como cambiar una puerta o ventana?",
     respuesta:
-      "Sí. Desde una sola ventana hasta un edificio completo — BOMEL atiende todos los tamaños de proyecto. Si tu necesidad es puntual, te cotizamos igual de rápido y con el mismo nivel de seriedad que una obra mayor.",
+      "Sí. Desde una sola ventana hasta un edificio completo — BOMEL atiende todos los tamaños de proyecto. Si tu necesidad es puntual, te cotizamos con la misma dedicación y el mismo nivel de seriedad que una obra mayor.",
   },
   {
     pregunta: "¿Trabajan solo la ventanería si ya tengo constructor?",
@@ -16,7 +16,7 @@ const FAQS = [
   {
     pregunta: "¿Cuánto tarda una cotización?",
     respuesta:
-      "En menos de 24 horas hábiles. Para proyectos que requieren visita técnica, agendamos la visita en el mismo día y enviamos el presupuesto formal al día siguiente. Sin demoras ni excusas.",
+      "Depende del alcance de tu proyecto. Cada cotización la prepara nuestro equipo técnico con medidas, especificaciones y costos detallados, y si hace falta una visita técnica la coordinamos contigo. Preferimos entregarte un presupuesto preciso y bien sustentado antes que uno apresurado.",
   },
   {
     pregunta: "¿Dan garantía por escrito?",

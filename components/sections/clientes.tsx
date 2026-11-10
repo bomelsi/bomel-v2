@@ -1,13 +1,17 @@
 import React from "react";
 import { Reveal } from "@/components/reveal";
 
+// Un cliente, una entrada: Constructora El Salvador aparecía dos veces, una
+// por cada obra. Ahora se agrupan sus proyectos bajo un solo nombre.
 const CLIENTES = [
-  { empresa: "Constructora El Salvador", proyecto: "Hospital Nacional Rosales" },
-  { empresa: "Constructora El Salvador", proyecto: "Plaza Universitaria" },
-  { empresa: "UDP CALZADA - ICACON", proyecto: "Hospital Nejapa" },
-  { empresa: "4Carriles", proyecto: "Recintos Deportivos" },
-  { empresa: "Solaire", proyecto: "FGR Santa Elena" },
-  { empresa: "Sr. Marcos Carranza", proyecto: "Centro Médico San Alejo" },
+  {
+    nombre: "Constructora El Salvador",
+    proyectos: ["Hospital Nacional Rosales", "Plaza Universitaria"],
+  },
+  { nombre: "UDP CALZADA - ICACON", proyectos: ["Hospital Nejapa"] },
+  { nombre: "4Carriles", proyectos: ["Recintos Deportivos"] },
+  { nombre: "Solaire", proyectos: ["FGR Santa Elena"] },
+  { nombre: "Sr. Marcos Carranza", proyectos: ["Centro Médico San Alejo"] },
 ];
 
 export function ClientesBanner() {
@@ -20,21 +24,28 @@ export function ClientesBanner() {
 
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
+          {/* "Empresas" no era exacto: la lista incluye también a un cliente
+              particular. */}
           <p className="text-center text-xs font-bold uppercase tracking-[0.3em] text-brand-bright/60 mb-8">
-            Empresas que han confiado en BOMEL
+            Quienes han confiado en BOMEL
           </p>
         </Reveal>
 
         <div className="flex flex-wrap items-start justify-center gap-x-10 gap-y-6">
           {CLIENTES.map((cliente, i) => (
-            <Reveal key={`${cliente.empresa}-${cliente.proyecto}`} delay={i * 0.06}>
+            <Reveal key={cliente.nombre} delay={i * 0.06}>
               <div className="group flex flex-col items-center gap-1">
                 <span className="font-heading text-sm font-bold tracking-wide text-foreground/40 transition-colors duration-300 group-hover:text-foreground/80 md:text-base">
-                  {cliente.empresa}
+                  {cliente.nombre}
                 </span>
-                <span className="text-[11px] font-medium text-brand/40 transition-colors duration-300 group-hover:text-brand/70">
-                  {cliente.proyecto}
-                </span>
+                {cliente.proyectos.map((proyecto) => (
+                  <span
+                    key={proyecto}
+                    className="text-[11px] font-medium text-brand/40 transition-colors duration-300 group-hover:text-brand/70"
+                  >
+                    {proyecto}
+                  </span>
+                ))}
               </div>
             </Reveal>
           ))}

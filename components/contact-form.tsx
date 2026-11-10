@@ -47,7 +47,7 @@ export function ContactForm() {
           Recibido.
         </h3>
         <p className="text-muted-foreground">
-          Te respondemos en menos de 24 horas hábiles.
+          Nuestro equipo revisará tu solicitud y te contactará para preparar tu cotización.
         </p>
       </div>
     );
@@ -194,7 +194,7 @@ export function ContactForm() {
       </button>
 
       <p className="text-center text-xs text-muted-foreground/60">
-        Te respondemos en menos de 24 horas hábiles.
+        Cada solicitud la revisa nuestro equipo técnico para darte una cotización profesional.
       </p>
     </form>
   );

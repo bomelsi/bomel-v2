@@ -79,6 +79,14 @@ const INJECTED_STYLES = `
           inset 0 -1px 1px rgba(0,0,0,0.5);
   }
 
+  /* En táctil no hay puntero que mueva el brillo de la tarjeta, y el grano
+     al 5% casi no se percibe en pantallas pequeñas. Ambos usan
+     mix-blend-mode sobre el lienzo, que obliga a recomponer toda la escena
+     en cada fotograma del scroll: se apagan para que el teléfono vaya suelto. */
+  @media (hover: none) {
+      .film-grain, .card-sheen { display: none; }
+  }
+
   /* Degradado arriba y abajo de la casa para fundirse con el fondo
      oscuro del hero (sin cortes duros), en móvil y desktop */
   .canvas-veil {

@@ -6,7 +6,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 export interface HeroCtasProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 /**
- * Botones CTA del hero ("Recibe tu cotización en 24h" / "Agenda una visita
+ * Botones CTA del hero ("Solicita tu cotización" / "Agenda una visita
  * técnica"), extraídos a un componente aparte al fusionar el hero de texto
  * con la sección cinemática de la casa (ya no caben en esa primera pantalla).
  * Pendiente reubicar en el sitio — ver componente Hero.
@@ -26,7 +26,7 @@ export function HeroCtas({ className, ...props }: HeroCtasProps) {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-brand-bright to-brand-strong px-7 py-3.5 text-sm font-bold text-[#04211d] shadow-[0_8px_24px_-8px_rgba(45,212,191,0.6)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(45,212,191,0.7)]"
       >
-        Recibe tu cotización en 24h →
+        Solicita tu cotización →
       </a>
       <Link
         href="/contacto"

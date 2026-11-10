@@ -66,7 +66,7 @@ export const SERVICIOS_DATA: Servicio[] = [
           "Evaluamos el terreno, las dimensiones y los requerimientos específicos de tu obra sin costo.",
       },
       {
-        titulo: "Cotización en 24h",
+        titulo: "Cotización profesional",
         descripcion:
           "Presupuesto detallado con cronograma real, sin letra pequeña ni costos ocultos.",
       },
@@ -394,7 +394,7 @@ export const SERVICIOS_DATA: Servicio[] = [
           "Un técnico toma medidas exactas en tu obra. Sin estimaciones — cada pieza se fabrica a medida.",
       },
       {
-        titulo: "Cotización en 24h",
+        titulo: "Cotización profesional",
         descripcion:
           "Especificación detallada de perfil, vidrio, herraje y costo total sin sorpresas.",
       },

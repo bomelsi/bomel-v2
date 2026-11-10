@@ -115,7 +115,7 @@ export function Cotizador() {
           <span className="text-brand-bright">3 pasos</span>.
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Sin precios en pantalla — BOMEL te responde con tu cotización exacta por WhatsApp en menos de 24 horas.
+          Sin precios en pantalla — BOMEL te responde por WhatsApp con una cotización exacta y detallada.
         </p>
       </div>
 
@@ -407,7 +407,7 @@ export function Cotizador() {
             </a>
 
             <p className="mt-3 text-center text-xs text-muted-foreground">
-              Te respondemos con tu cotización en menos de 24 horas hábiles.
+              Te respondemos con una cotización profesional, hecha a la medida de tu proyecto.
             </p>
             <p className="mt-1 text-center text-[10px] text-muted-foreground/50">
               * El precio podría variar según distancia, nivel de piso de instalación y condiciones específicas del sitio.

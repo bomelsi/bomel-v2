@@ -10,7 +10,7 @@ import { WHATSAPP_URL, WHATSAPP_NUMBER, EMAIL, PHONE_E164 } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contacto | BOMEL — Cotiza tu proyecto",
   description:
-    "Agenda una visita técnica o cotiza tu proyecto de construcción, ventanería o fachadas ACM en El Salvador. Respuesta en menos de 24 horas hábiles.",
+    "Agenda una visita técnica o cotiza tu proyecto de construcción, ventanería o fachadas ACM en El Salvador. Cotizaciones profesionales, detalladas y sin costos ocultos.",
   alternates: { canonical: "/contacto" },
 };
 
@@ -33,7 +33,7 @@ export default function ContactoPage() {
                 <span className="text-brand-bright">construir.</span>
               </h1>
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-                Completa el formulario y un miembro de nuestro equipo te responde en menos de 24 horas hábiles. Sin formularios eternos, sin callcenters.
+                Completa el formulario y un miembro de nuestro equipo te contacta para preparar tu cotización profesional. Sin formularios eternos, sin callcenters.
               </p>
             </Reveal>
           </div>
