@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Reveal } from "@/components/reveal";
 import { SERVICIOS_DATA, getServicio } from "@/lib/data/servicios";
 import { SITE_URL, WHATSAPP_URL } from "@/lib/site";
+import { Catalogo } from "@/components/sections/catalogo";
 import { Cotizador } from "@/components/cotizador";
 
 interface Props {
@@ -262,11 +263,14 @@ export default async function ServicioPage({ params }: Props) {
           </div>
         </section>
 
-        {/* ── Cotizador (solo para ventanería) ── */}
+        {/* ── Catálogo + cotizador (solo para ventanería) ── */}
         {slug === "ventaneria-y-puertas" && (
-          <section className="mx-auto max-w-3xl px-6 pb-16 md:pb-20">
-            <Cotizador />
-          </section>
+          <>
+            <Catalogo />
+            <section className="mx-auto max-w-3xl px-6 pb-16 md:pb-20">
+              <Cotizador />
+            </section>
+          </>
         )}
 
         {/* ── CTA final ── */}

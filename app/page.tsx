@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/hero";
 import { MagneticCta } from "@/components/magnetic-cta";
 import { Navbar } from "@/components/navbar";
 import { ClientesBanner } from "@/components/sections/clientes";
+import { Catalogo } from "@/components/sections/catalogo";
 import { Cotizador } from "@/components/cotizador";
 import { Nosotros } from "@/components/sections/nosotros";
 import { Servicios } from "@/components/sections/servicios";
@@ -21,6 +22,7 @@ export default function Home() {
         <Hero />
         <Servicios />
         <Ventanas />
+        <Catalogo />
         <section className="mx-auto max-w-3xl px-6 pb-24 md:pb-32">
           <Cotizador />
         </section>

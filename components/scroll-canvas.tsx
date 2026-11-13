@@ -19,8 +19,10 @@ interface ScrollCanvasProps {
   frameSrc: (index: number) => string;
   className?: string;
   /**
-   * Progreso (0 a 1) de la descarga de la secuencia. Al llegar a 1 están los
-   * 121 frames en memoria y el scroll puede recorrerla completa.
+   * Progreso (0 a 1) de los frames clave, no de los 121. Al llegar a 1 la
+   * secuencia ya se recorre entera de obra gris a casa terminada; el resto
+   * entra después y solo añade detalle. Esperar a los 121 dejaba la barra
+   * de la pantalla de entrada clavada a medias en móvil.
    */
   onLoadProgress?: (progress: number) => void;
 }
@@ -83,8 +85,8 @@ function createSequence(
   let drawnIndex = -1;
   let raf = 0;
   let forceNext = false;
-  let settled = 0;
   let visible = true;
+  const keysReady = new Set<number>();
 
   const source = (index: number): FrameSource | null => {
     const bitmap = bitmaps.get(index);
@@ -303,22 +305,26 @@ function createSequence(
             bitmaps.set(index, bitmap);
             scheduleIfBetter();
           }
+          markKey(index);
           pump();
         },
         () => {
           decoding.delete(index);
           if (disposed) return;
           // Este frame no se pudo decodificar como bitmap: se dibuja como <img>.
-          loadImage(index);
+          loadImage(index, () => markKey(index));
           pump();
         }
       );
     }
   };
 
-  const settle = () => {
-    settled += 1;
-    onProgress(settled / frameCount);
+  // Un frame clave cuenta en cuanto se puede dibujar (o se descarta por
+  // fallo). Los no clave no mueven la barra.
+  const markKey = (index: number) => {
+    if (!isKeyframe.has(index) || keysReady.has(index)) return;
+    keysReady.add(index);
+    onProgress(keysReady.size / keyframes.length);
   };
 
   // Descarga: primero las claves y luego el resto, para que la secuencia se
@@ -332,7 +338,7 @@ function createSequence(
   ];
   for (const i of ordenDescarga) {
     if (!useBitmaps) {
-      loadImage(i, settle);
+      loadImage(i, () => markKey(i));
       continue;
     }
     fetch(frameSrc(i), { signal: abort.signal })
@@ -343,12 +349,13 @@ function createSequence(
       .then((blob) => {
         if (disposed) return;
         blobs[i] = blob;
-        settle();
         pump();
       })
       .catch(() => {
         if (disposed) return;
-        settle();
+        // Un fallo de red tiene que resolver igual la clave: si no, la
+        // barra se queda clavada esperando algo que no va a llegar.
+        markKey(i);
       });
   }
 

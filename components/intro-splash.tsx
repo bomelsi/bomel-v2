@@ -32,14 +32,15 @@ const STAMP_AT_MS = TYPE_START_MS + SLOGAN.length * CHAR_MS + STAMP_PAUSE_MS;
 // Momento del golpe dentro de la animación del sello (≈55% de 620 ms).
 const IMPACT_DELAY_MS = 340;
 // Tiempo que BOMEL se sostiene firme antes de retirarse.
-const HOLD_MS = 2000;
+const HOLD_MS = 1500;
 // Tiempo mínimo en pantalla: aunque la carga termine antes, la entrada se
 // queda hasta completar la coreografía. La línea avanza pareja hasta aquí.
 const MIN_SHOW_MS = STAMP_AT_MS + HOLD_MS;
 // Tope de espera: con conexión lenta la entrada se retira igual y el resto
 // de frames sigue cargando por detrás (ScrollCanvas muestra el más cercano).
-const MAX_WAIT_MS = 9000;
-const TICK_MS = 100;
+// Tope de espera. Con la barra atada a los frames clave (y no a los 121)
+// la carga termina mucho antes; este tope ya solo cubre una red muy mala.
+const MAX_WAIT_MS = 6000;
 // Pausa para que la línea llegue visiblemente al final antes del fundido.
 const FILL_SETTLE_MS = 350;
 const FADE_OUT_MS = 600;
@@ -165,7 +166,6 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
     const root = rootRef.current;
     if (!root) return;
 
-    if (fillRef.current) fillRef.current.style.width = "100%";
     timersRef.current.push(
       window.setTimeout(() => {
         // Congela la opacidad actual y funde con una transición.
@@ -230,15 +230,37 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
 
     at(MAX_WAIT_MS, leave);
 
-    // La línea muestra el menor entre el progreso real y el tiempo mínimo
-    // transcurrido, y la entrada se retira cuando se cumplen ambos.
-    const tick = window.setInterval(() => {
-      if (leavingRef.current) return window.clearInterval(tick);
+    // Objetivo de la barra: el menor entre el progreso real y el tiempo
+    // mínimo. Lo calcula un temporizador, no requestAnimationFrame: si el
+    // navegador deja de pintar (pestaña en segundo plano) rAF se detiene, y
+    // con él se detendría también la decisión de retirar la entrada.
+    let objetivo = 0;
+    const tick = () => {
+      if (leavingRef.current) return;
       const byTime = (performance.now() - start) / MIN_SHOW_MS;
-      const shown = Math.min(progressRef.current, byTime);
-      if (fillRef.current) fillRef.current.style.width = `${shown * 100}%`;
+      objetivo = Math.min(progressRef.current, byTime, 1);
       if (progressRef.current >= 1 && byTime >= 1) leave();
-    }, TICK_MS);
+    };
+    tick();
+    const timer = window.setInterval(tick, 100);
+
+    // El dibujo sí va por fotograma y sin transición CSS, acercándose al
+    // objetivo poco a poco: suaviza los saltos del progreso real y nunca
+    // queda por detrás de lo que muestra.
+    let shown = 0;
+    let raf = 0;
+    const paint = () => {
+      const meta = leavingRef.current ? 1 : objetivo;
+      if (meta > shown) {
+        shown += (meta - shown) * 0.16;
+        if (meta - shown < 0.004) shown = meta;
+      }
+      if (fillRef.current) {
+        fillRef.current.style.width = `${(shown * 100).toFixed(1)}%`;
+      }
+      raf = requestAnimationFrame(paint);
+    };
+    raf = requestAnimationFrame(paint);
 
     // Mientras la entrada cubre la pantalla, el scroll no debe avanzar el
     // hero por debajo sin que se vea. En táctil lo frena touch-action.
@@ -248,7 +270,8 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
 
     return () => {
       root?.removeEventListener("wheel", block);
-      window.clearInterval(tick);
+      window.clearInterval(timer);
+      cancelAnimationFrame(raf);
       timers.forEach(clearTimeout);
       // Si se sale del home a mitad de la entrada, el velo no debe quedarse.
       html.classList.remove(INTRO_PENDING_CLASS);
@@ -321,7 +344,7 @@ export const IntroSplash = forwardRef<IntroSplashHandle>(function IntroSplash(
         <div className="mt-7 h-0.5 w-40 overflow-hidden rounded-full bg-white/10 md:w-56">
           <div
             ref={fillRef}
-            className="intro-fill h-full w-0 rounded-full bg-brand-bright transition-[width] duration-300 ease-out"
+            className="intro-fill h-full w-0 rounded-full bg-brand-bright"
           />
         </div>
       </div>
