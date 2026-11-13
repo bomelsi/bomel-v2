@@ -18,4 +18,6 @@ export const SOCIALS = {
 
 export const NAV_LINKS = [{ label: "Nosotros", href: "#nosotros" }];
 
+export const CATALOGO_LINK = { label: "Catálogo", href: "/catalogo" };
+
 export const CONTACTO_LINK = { label: "Contacto", href: "/contacto" };

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { subscribeScroll } from "@/lib/scroll-root";
-import { CONTACTO_LINK, NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
+import { CATALOGO_LINK, CONTACTO_LINK, NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
 import { SERVICIOS_DATA } from "@/lib/data/servicios";
 
 const SERVICIOS_MENU = SERVICIOS_DATA.map((s) => ({
@@ -131,6 +131,15 @@ export function Navbar() {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-bright"
             >
               Blog
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href={CATALOGO_LINK.href}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-brand-bright"
+            >
+              {CATALOGO_LINK.label}
             </Link>
           </li>
 
@@ -263,6 +272,16 @@ export function Navbar() {
                   className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
                 >
                   Blog
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href={CATALOGO_LINK.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-xl px-4 py-3 text-base font-medium text-foreground transition-colors hover:bg-white/5 hover:text-brand-bright"
+                >
+                  {CATALOGO_LINK.label}
                 </Link>
               </li>
 
