@@ -25,21 +25,32 @@ interface ScrollCanvasProps {
   onLoadProgress?: (progress: number) => void;
 }
 
-// Ventana de frames decodificados alrededor del actual. Decodificar un frame
-// cuesta decenas de ms; si se hace al dibujarlo (como con <img>) el scroll se
-// traba, y los 121 decodificados no caben en memoria (el navegador los
-// descarta y los vuelve a decodificar una y otra vez). Por eso se mantienen
-// decodificados solo los cercanos, con más margen hacia donde va el scroll.
+// Decodificar un frame cuesta decenas de ms; si se hace al dibujarlo (como
+// con <img>) el scroll se traba, y los 121 decodificados a la vez no caben en
+// memoria: el navegador los descarta y los vuelve a decodificar sin parar.
+//
+// La secuencia se sostiene con dos conjuntos:
+//
+// 1. Claves: uno de cada KEY_STEP, repartidos por toda la obra. Se descargan y
+//    decodifican primero y no se liberan nunca. Garantizan que, apenas entra
+//    la página, haya siempre un frame dibujable a menos de KEY_STEP/2 de
+//    donde esté el scroll. Sin esto solo existía el frame 0 y el hero se veía
+//    congelado durante los primeros segundos, porque durante el hero lo único
+//    que cambia es la casa.
+// 2. Ventana: los vecinos del frame actual, con más margen hacia donde avanza
+//    el scroll. Dan el detalle fino y se liberan al alejarse.
+const KEY_STEP = 8;
 const AHEAD = 20;
 const BEHIND = 8;
 // Holgura antes de liberar un frame que salió de la ventana, para no
 // decodificar y liberar el mismo frame con cada pequeño vaivén del scroll.
 const KEEP_MARGIN = 3;
-const MAX_DECODES = 4;
+const MAX_DECODES = 6;
 
 type FrameSource = ImageBitmap | HTMLImageElement;
 
 interface Sequence {
+  setVisible: (visible: boolean) => void;
   setProgress: (progress: number) => void;
   redraw: () => void;
   dispose: () => void;
@@ -52,6 +63,12 @@ function createSequence(
   onProgress: (progress: number) => void
 ): Sequence {
   const ctx = canvas.getContext("2d");
+  const keyframes: number[] = [];
+  for (let i = 0; i < frameCount; i += KEY_STEP) keyframes.push(i);
+  if (keyframes[keyframes.length - 1] !== frameCount - 1) {
+    keyframes.push(frameCount - 1);
+  }
+  const isKeyframe = new Set(keyframes);
   // createImageBitmap(blob) decodifica fuera del hilo principal. Donde no
   // existe (navegadores viejos) se cae al dibujado directo de <img>.
   const useBitmaps = typeof createImageBitmap === "function";
@@ -67,6 +84,7 @@ function createSequence(
   let raf = 0;
   let forceNext = false;
   let settled = 0;
+  let visible = true;
 
   const source = (index: number): FrameSource | null => {
     const bitmap = bitmaps.get(index);
@@ -241,10 +259,11 @@ function createSequence(
   // de los que faltan, primero los más cercanos al objetivo y, a igual
   // distancia, los que quedan hacia donde avanza el scroll.
   const pump = () => {
-    if (disposed || !useBitmaps) return;
+    if (disposed || !useBitmaps || !visible) return;
     const [lo, hi] = windowRange();
 
     for (const [index, bitmap] of bitmaps) {
+      if (isKeyframe.has(index)) continue;
       if (index < lo - KEEP_MARGIN || index > hi + KEEP_MARGIN) {
         bitmap.close();
         bitmaps.delete(index);
@@ -252,17 +271,21 @@ function createSequence(
     }
 
     if (decoding.size >= MAX_DECODES) return;
-    const pending: number[] = [];
-    for (let i = lo; i <= hi; i++) {
-      if (blobs[i] && !bitmaps.has(i) && !decoding.has(i) && !images.has(i)) {
-        pending.push(i);
-      }
-    }
+    const falta = (i: number) =>
+      blobs[i] && !bitmaps.has(i) && !decoding.has(i) && !images.has(i);
+
+    // Las claves van primero: hasta que estén, el scroll por delante del
+    // frame actual no tendría nada cercano que mostrar.
+    const pending = keyframes.filter(falta);
+
+    const ventana: number[] = [];
+    for (let i = lo; i <= hi; i++) if (!isKeyframe.has(i) && falta(i)) ventana.push(i);
     const cost = (index: number) => {
       const delta = index - target;
       return delta * direction >= 0 ? Math.abs(delta) : Math.abs(delta) * 2 + 1;
     };
-    pending.sort((a, b) => cost(a) - cost(b));
+    ventana.sort((a, b) => cost(a) - cost(b));
+    pending.push(...ventana);
 
     for (const index of pending) {
       if (decoding.size >= MAX_DECODES) break;
@@ -272,7 +295,8 @@ function createSequence(
           decoding.delete(index);
           if (disposed) return bitmap.close();
           const [curLo, curHi] = windowRange();
-          if (index < curLo - KEEP_MARGIN || index > curHi + KEEP_MARGIN) {
+          const fuera = index < curLo - KEEP_MARGIN || index > curHi + KEEP_MARGIN;
+          if (fuera && !isKeyframe.has(index)) {
             // El scroll ya se fue lejos mientras se decodificaba.
             bitmap.close();
           } else {
@@ -297,15 +321,21 @@ function createSequence(
     onProgress(settled / frameCount);
   };
 
-  // Descarga de toda la secuencia, en orden. Un frame que falla cuenta igual
-  // como resuelto (si no, el progreso se quedaría clavado) y nearest() tira
-  // de su vecino.
-  for (let i = 0; i < frameCount; i++) {
+  // Descarga: primero las claves y luego el resto, para que la secuencia se
+  // pueda recorrer entera cuanto antes. Sin prioridad baja: en el inicio la
+  // casa es el contenido principal, no un extra.
+  const ordenDescarga = [
+    ...keyframes,
+    ...Array.from({ length: frameCount }, (_, i) => i).filter(
+      (i) => !isKeyframe.has(i)
+    ),
+  ];
+  for (const i of ordenDescarga) {
     if (!useBitmaps) {
       loadImage(i, settle);
       continue;
     }
-    fetch(frameSrc(i), { signal: abort.signal, priority: "low" })
+    fetch(frameSrc(i), { signal: abort.signal })
       .then((res) => {
         if (!res.ok) throw new Error(String(res.status));
         return res.blob();
@@ -323,6 +353,24 @@ function createSequence(
   }
 
   return {
+    // El hero ocupa 4 pantallas y la secuencia decodificada son ~100 MB. Al
+    // salir de vista se liberan: el resto de la página (las tarjetas de
+    // ventanería, justo debajo) se anima sin esa memoria encima. Los blobs
+    // se conservan, así que volver a verla no vuelve a descargar nada.
+    setVisible(next: boolean) {
+      if (next === visible) return;
+      visible = next;
+      if (next) {
+        pump();
+        return;
+      }
+      for (const [index, bitmap] of bitmaps) {
+        // Se conserva el que está pintado para que al volver no haya hueco.
+        if (index === drawnIndex) continue;
+        bitmap.close();
+        bitmaps.delete(index);
+      }
+    },
     setProgress(progress: number) {
       const clamped = Math.min(1, Math.max(0, progress));
       const index = Math.min(frameCount - 1, Math.floor(clamped * frameCount));
@@ -388,8 +436,16 @@ export const ScrollCanvas = forwardRef<ScrollCanvasHandle, ScrollCanvasProps>(
       const observer = new ResizeObserver(() => sequence.redraw());
       observer.observe(canvas);
 
+      // Libera la memoria de la secuencia mientras el hero no se ve.
+      const visibility = new IntersectionObserver(
+        ([entry]) => sequence.setVisible(entry.isIntersecting),
+        { rootMargin: "100% 0px" }
+      );
+      visibility.observe(canvas);
+
       return () => {
         observer.disconnect();
+        visibility.disconnect();
         sequence.dispose();
         sequenceRef.current = null;
       };

@@ -63,7 +63,7 @@ export const ExpandingCards = React.forwardRef<
         "w-full max-w-6xl gap-2",
         "grid",
         "h-[780px] md:h-[680px]",
-        "transition-[grid-template-columns,grid-template-rows] duration-500 ease-out",
+        "transition-[grid-template-columns,grid-template-rows] duration-[380ms] ease-out",
         className
       )}
       style={{
@@ -81,9 +81,16 @@ export const ExpandingCards = React.forwardRef<
           className={cn(
             "group relative cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-card shadow-sm",
             "md:min-w-[80px]",
-            "min-h-0 min-w-0"
+            "min-h-0 min-w-0",
+            // Acota el repintado a la tarjeta: al animar la rejilla, el
+            // navegador no tiene que rehacer el resto de la seccion.
+            "[contain:paint]"
           )}
-          onMouseEnter={() => handleInteraction(index)}
+          onPointerEnter={(e) => {
+            // Solo con raton: en tactil el tap dispara enter y click juntos,
+            // dos renders por toque mientras la rejilla se esta animando.
+            if (e.pointerType === "mouse") handleInteraction(index);
+          }}
           onFocus={() => handleInteraction(index)}
           onClick={() => handleInteraction(index)}
           tabIndex={0}
@@ -95,7 +102,7 @@ export const ExpandingCards = React.forwardRef<
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1279px) 60vw, 40vw"
             loading="lazy"
-            className="object-cover transition-all duration-300 ease-out group-data-[active=true]:scale-100 group-data-[active=true]:grayscale-0 scale-110 grayscale"
+            className="object-cover scale-110 grayscale transition-transform duration-300 ease-out group-data-[active=true]:scale-100 group-data-[active=true]:grayscale-0"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#04211d]/90 via-black/40 to-transparent" />
 
